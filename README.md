@@ -1,6 +1,14 @@
 # 🌴 Automatic Grading TBS AI Computer Vision
 
-Repository monorepo ini berisi project **Automatic Grading TBS (Tandan Buah Segar) Kelapa Sawit** berbasis AI Computer Vision. Sistem memakai YOLO untuk deteksi/grading, aplikasi Android untuk demo mobile offline, Streamlit untuk demo web inference, dan dashboard backend untuk menerima data upload dari mobile.
+Final Project - CV Kelompok A (Raden Saleh)
+
+1. Ridwan Pioneer Panjaitan
+2. Felim
+3. Dwi Lenggana
+4. Gunadi Rismananda
+
+Repository monorepo ini berisi project **Automatic Grading TBS (Tandan Buah Segar) Kelapa Sawit** berbasis AI Computer Vision. 
+Sistem memakai YOLO untuk deteksi/grading, aplikasi Android untuk demo mobile offline, Streamlit untuk demo web inference, dan dashboard backend untuk menerima data upload dari mobile.
 
 ## 🚀 Live Demo
 
