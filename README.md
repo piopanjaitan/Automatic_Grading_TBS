@@ -9,36 +9,6 @@ Repository monorepo ini berisi project **Automatic Grading TBS (Tandan Buah Sega
 | Streamlit Grading TBS | <https://grading-ustp.my.id/> |
 | Dashboard Upload Mobile | <https://dashboard-grading-ustp.my.id/> |
 
-## 🖼️ Demo Screenshots
-
-Media demo berikut berasal dari folder `readme_assets/demo/mobile`, `readme_assets/demo/dashboard`, dan `readme_assets/demo/streamlite`.
-
-### 📱 Demo Mobile
-
-![Mobile Live Detection](readme_assets/demo/mobile/mgrading_live_demo.gif)
-
-![Mobile Field User Demo](readme_assets/demo/mobile/mgrading_field_user_demo.gif)
-
-![Mobile Screenshot 1](readme_assets/demo/mobile/Screenshot_20260623_125534.png)
-
-![Mobile Screenshot 2](readme_assets/demo/mobile/Screenshot_20260623_125605.png)
-
-![Mobile Screenshot 3](readme_assets/demo/mobile/Screenshot_20260623_125630.png)
-
-### 🌐 Demo Streamlit
-
-![Streamlit Demo Video](readme_assets/demo/streamlite/streamlit_grading_tbs_demo.gif)
-
-![Streamlit Screenshot](readme_assets/demo/streamlite/Screenshot_20260622_110001.png)
-
-### 📊 Demo Dashboard
-
-![Dashboard Screenshot 1](readme_assets/demo/dashboard/Screenshot_20260611_230458.png)
-
-![Dashboard Screenshot 2](readme_assets/demo/dashboard/Screenshot_20260611_230517.png)
-
-![Dashboard Screenshot 3](readme_assets/demo/dashboard/Screenshot_20260611_230538.png)
-
 ## 🧩 Komponen Project
 
 | Folder | Isi | Status |
@@ -109,9 +79,7 @@ Ringkasan performa dari dokumentasi training:
 
 Folder `streamlit-demo/` berisi aplikasi demo web CPU-only. Model final kecil untuk demo Streamlit disertakan di:
 
-```text
-streamlit-demo/Huggingface/models/best.pt
-```
+[streamlit-demo/Huggingface/models/best.pt](streamlit-demo/Huggingface/models/best.pt)
 
 Jalankan lokal:
 
@@ -130,6 +98,12 @@ Buka:
 http://127.0.0.1:8501
 ```
 
+### Tampilan Demo
+
+![Streamlit Demo Video](readme_assets/demo/streamlite/streamlit_grading_tbs_demo.gif)
+
+![Streamlit Screenshot](readme_assets/demo/streamlite/Screenshot_20260622_110001.png)
+
 ## 📱 Android Mobile Demo
 
 Folder `android-mobile-demo/` berisi aplikasi Android native `mGradingUSTP`. Aplikasi ini mendukung:
@@ -146,6 +120,11 @@ Model TFLite Android tidak ikut dipush. Sebelum build, letakkan model lokal di:
 android-mobile-demo/app/src/main/assets/grading_tph_int8.tflite
 ```
 
+Panduan model mobile ada di:
+
+- [android-mobile-demo/app/src/main/assets/README_MODEL.txt](android-mobile-demo/app/src/main/assets/README_MODEL.txt)
+- [android-mobile-demo/README.md](android-mobile-demo/README.md)
+
 Build debug:
 
 ```bash
@@ -161,6 +140,18 @@ release-apk/mGrading_RPP_09062026_alpha_test.apk
 ```
 
 Folder `release-apk/` sengaja di-ignore agar APK tidak ikut push ke GitHub.
+
+### Tampilan Demo
+
+![Mobile Live Detection](readme_assets/demo/mobile/mgrading_live_demo.gif)
+
+![Mobile Field User Demo](readme_assets/demo/mobile/mgrading_field_user_demo.gif)
+
+![Mobile Screenshot 1](readme_assets/demo/mobile/Screenshot_20260623_125534.png)
+
+![Mobile Screenshot 2](readme_assets/demo/mobile/Screenshot_20260623_125605.png)
+
+![Mobile Screenshot 3](readme_assets/demo/mobile/Screenshot_20260623_125630.png)
 
 ## 📊 Dashboard Backend
 
@@ -194,6 +185,14 @@ https://dashboard-grading-ustp.my.id
 ```
 
 Aplikasi Android akan menambahkan path `/api/detections` sendiri.
+
+### Tampilan Demo
+
+![Dashboard Screenshot 1](readme_assets/demo/dashboard/Screenshot_20260611_230458.png)
+
+![Dashboard Screenshot 2](readme_assets/demo/dashboard/Screenshot_20260611_230517.png)
+
+![Dashboard Screenshot 3](readme_assets/demo/dashboard/Screenshot_20260611_230538.png)
 
 ## 🎞️ Presentasi
 
