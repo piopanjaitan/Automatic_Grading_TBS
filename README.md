@@ -1,37 +1,45 @@
-# Automatic Grading TBS AI Computer Vision
+# 🌴 Automatic Grading TBS AI Computer Vision
 
 Repository monorepo ini berisi project **Automatic Grading TBS (Tandan Buah Segar) Kelapa Sawit** berbasis AI Computer Vision. Sistem memakai YOLO untuk deteksi/grading, aplikasi Android untuk demo mobile offline, Streamlit untuk demo web inference, dan dashboard backend untuk menerima data upload dari mobile.
 
-## Live Demo
+## 🚀 Live Demo
 
 | Komponen | Link |
 |---|---|
 | Streamlit Grading TBS | <https://grading-ustp.my.id/> |
 | Dashboard Upload Mobile | <https://dashboard-grading-ustp.my.id/> |
 
-## Demo Screenshots
+## 🖼️ Demo Screenshots
 
-Gambar berikut diambil dari slide 25-29 file presentasi `presentasi/Final_Project_CV_KEL_A_Raden_Saleh_Project_Automatic_Grading_TBS_AI.pptx`.
+Media demo berikut berasal dari folder `readme_assets/demo/mobile`, `readme_assets/demo/dashboard`, dan `readme_assets/demo/streamlite`.
 
-### Demo Mobile
+### 📱 Demo Mobile
 
-![Demo Mobile](readme_assets/demo/slide-25.png)
+![Mobile Live Detection](readme_assets/demo/mobile/mgrading_live_demo.gif)
 
-### Demo Website
+![Mobile Field User Demo](readme_assets/demo/mobile/mgrading_field_user_demo.gif)
 
-![Demo Website 1](readme_assets/demo/slide-26.png)
+![Mobile Screenshot 1](readme_assets/demo/mobile/Screenshot_20260623_125534.png)
 
-![Demo Website 2](readme_assets/demo/slide-27.png)
+![Mobile Screenshot 2](readme_assets/demo/mobile/Screenshot_20260623_125605.png)
 
-### Demo Dashboard
+![Mobile Screenshot 3](readme_assets/demo/mobile/Screenshot_20260623_125630.png)
 
-![Demo Dashboard](readme_assets/demo/slide-28.png)
+### 🌐 Demo Streamlit
 
-### Demo Video
+![Streamlit Demo Video](readme_assets/demo/streamlite/streamlit_grading_tbs_demo.gif)
 
-![Demo Video](readme_assets/demo/slide-29.png)
+![Streamlit Screenshot](readme_assets/demo/streamlite/Screenshot_20260622_110001.png)
 
-## Komponen Project
+### 📊 Demo Dashboard
+
+![Dashboard Screenshot 1](readme_assets/demo/dashboard/Screenshot_20260611_230458.png)
+
+![Dashboard Screenshot 2](readme_assets/demo/dashboard/Screenshot_20260611_230517.png)
+
+![Dashboard Screenshot 3](readme_assets/demo/dashboard/Screenshot_20260611_230538.png)
+
+## 🧩 Komponen Project
 
 | Folder | Isi | Status |
 |---|---|---|
@@ -42,7 +50,7 @@ Gambar berikut diambil dari slide 25-29 file presentasi `presentasi/Final_Projec
 | `presentasi/` | File presentasi project. | Siap |
 | `release-apk/` | APK lokal yang dipisahkan dari source tree. | Lokal saja, tidak ikut Git |
 
-## Struktur Repository
+## 📁 Struktur Repository
 
 ```text
 Grading_TBS_CV_KEL_A_Github/
@@ -75,7 +83,7 @@ Grading_TBS_CV_KEL_A_Github/
 └── .gitignore
 ```
 
-## Training YOLO
+## 🧠 Training YOLO
 
 Folder `training-yolo/` berisi notebook dan dokumentasi training model grading TBS. Dataset penuh tidak dimasukkan ke repository karena ukurannya besar, tetapi metadata dataset tetap tersedia di `training-yolo/dataset/`.
 
@@ -97,7 +105,7 @@ Ringkasan performa dari dokumentasi training:
 | Test mAP50-95 | 76.57% |
 | Optimizer terbaik benchmark | MuSGD |
 
-## Streamlit Demo
+## 🌐 Streamlit Demo
 
 Folder `streamlit-demo/` berisi aplikasi demo web CPU-only. Model final kecil untuk demo Streamlit disertakan di:
 
@@ -122,7 +130,7 @@ Buka:
 http://127.0.0.1:8501
 ```
 
-## Android Mobile Demo
+## 📱 Android Mobile Demo
 
 Folder `android-mobile-demo/` berisi aplikasi Android native `mGradingUSTP`. Aplikasi ini mendukung:
 
@@ -154,7 +162,7 @@ release-apk/mGrading_RPP_09062026_alpha_test.apk
 
 Folder `release-apk/` sengaja di-ignore agar APK tidak ikut push ke GitHub.
 
-## Dashboard Backend
+## 📊 Dashboard Backend
 
 Folder `dashboard-nodejs/` berisi dashboard web dan backend upload. Nama folder mengikuti rencana awal, tetapi implementasi saat ini bukan Node.js; backend memakai Python standard-library di `server/server.py`.
 
@@ -187,21 +195,19 @@ https://dashboard-grading-ustp.my.id
 
 Aplikasi Android akan menambahkan path `/api/detections` sendiri.
 
-## Presentasi
+## 🎞️ Presentasi
 
-File presentasi utama:
+File presentasi utama dapat dibuka melalui PDF berikut:
 
-```text
-presentasi/Final_Project_CV_KEL_A_Raden_Saleh_Project_Automatic_Grading_TBS_AI.pptx
-```
+[Buka Presentasi PDF](presentasi/Final_Project_CV_KEL_A_Raden_Saleh_Project_Automatic_Grading_TBS_AI.pdf)
 
-Screenshot demo README diekstrak dari slide 25-29 dan disimpan di:
+Media demo README disimpan di:
 
 ```text
 readme_assets/demo/
 ```
 
-## Catatan File Besar
+## 📦 Catatan File Besar
 
 File berikut sengaja tidak dimasukkan ke GitHub:
 
@@ -217,20 +223,8 @@ File berikut sengaja tidak dimasukkan ke GitHub:
 
 Repository hanya membawa source code, notebook utama, metadata dataset, dokumentasi, artifact evaluasi terpilih, sample dashboard data, model final kecil untuk Streamlit, dan screenshot demo untuk README.
 
-## Git Check Sebelum Push
+## ✍️ Penulis
 
-Sebelum commit/push, pastikan file besar dan runtime tidak muncul:
+Ridwan Pioneer Panjaitan
 
-```bash
-git status --short
-find . -type f -size +50M -print
-git check-ignore -v release-apk/mGrading_RPP_09062026_alpha_test.apk
-git check-ignore -v android-mobile-demo/app/src/main/assets/grading_tph_int8.tflite
-```
-
-Commit awal yang disarankan:
-
-```bash
-git add .
-git commit -m "Add Grading TBS computer vision monorepo"
-```
+LinkedIn: <https://www.linkedin.com/in/piopanjaitan/>
