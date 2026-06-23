@@ -1,0 +1,7 @@
+source_id,unique_id,filename,duration_sec,resolution,size_mb,role
+V01,U01,WhatsApp Video 2026-06-10 at 4.14.10 PM.mp4,32.87,478x850,5.90,primary
+V02,U02,WhatsApp Video 2026-06-10 at 4.21.07 PM.mp4,80.11,390x850,14.87,primary
+V03,U03,WhatsApp Video 2026-06-10 at 4.22.30 PM.mp4,36.97,390x850,7.71,primary
+V04,U04,WhatsApp Video 2026-06-10 at 4.23.56 PM.mp4,45.47,390x850,9.45,primary
+V05,U04,fmzac_WhatsApp Video 2026-06-10 at 4.23.56 PM.mp4,45.47,390x850,9.45,duplicate_reference
+V06,U04,mhiqc_WhatsApp Video 2026-06-10 at 4.23.56 PM.mp4,45.47,390x850,9.45,duplicate_reference

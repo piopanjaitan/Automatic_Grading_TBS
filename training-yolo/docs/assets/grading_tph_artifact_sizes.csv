@@ -1,0 +1,8 @@
+artifact,format,path,size_mb
+best_pt,PyTorch PT,/home/ridwan/Documents/Final_Project/Grading_TPH/runs/detect/palm_oil_optimized-2/weights/best.pt,5.931
+best_onnx,ONNX,/home/ridwan/Documents/Final_Project/Grading_TPH/runs/detect/palm_oil_optimized-2/weights/best.onnx,11.691
+best_float16_tflite,TFLite FP16,/home/ridwan/Documents/Final_Project/Grading_TPH/runs/detect/palm_oil_optimized-2/weights/best_saved_model/best_float16.tflite,5.863
+best_float32_tflite,TFLite FP32,/home/ridwan/Documents/Final_Project/Grading_TPH/runs/detect/palm_oil_optimized-2/weights/best_saved_model/best_float32.tflite,11.645
+best_int8_tflite,TFLite INT8,/home/ridwan/Documents/Final_Project/Grading_TPH/runs/detect/palm_oil_optimized-2/weights/best_saved_model/best_int8.tflite,
+best_full_integer_quant_tflite,TFLite full integer quant,/home/ridwan/Documents/Final_Project/Grading_TPH/runs/detect/palm_oil_optimized-2/weights/best_saved_model/best_full_integer_quant.tflite,
+best_integer_quant_tflite,TFLite integer quant,/home/ridwan/Documents/Final_Project/Grading_TPH/runs/detect/palm_oil_optimized-2/weights/best_saved_model/best_integer_quant.tflite,

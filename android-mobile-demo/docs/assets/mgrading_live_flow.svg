@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="720" viewBox="0 0 1160 720" role="img" aria-label="Flow deteksi live multi objek TBS">
+  <defs>
+    <style>.bg{fill:#fff}.node{fill:#f4f7f8;stroke:#0f766e;stroke-width:2}.decision{fill:#fff4e2;stroke:#b7791f;stroke-width:2}.save{fill:#e7f7ef;stroke:#18805a;stroke-width:2}.stop{fill:#fff0f0;stroke:#c53030;stroke-width:2}.text{font-family:Arial,Helvetica,sans-serif;fill:#1f2933;font-size:20px;font-weight:700}.small{font-family:Arial,Helvetica,sans-serif;fill:#52616f;font-size:16px}.arrow{stroke:#0f766e;stroke-width:4;fill:none;marker-end:url(#arrow)}.red{stroke:#c53030;stroke-width:4;fill:none;marker-end:url(#redArrow)}</style>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M2,2 L10,6 L2,10 Z" fill="#0f766e"/></marker>
+    <marker id="redArrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M2,2 L10,6 L2,10 Z" fill="#c53030"/></marker>
+  </defs>
+  <rect class="bg" width="1160" height="720"/>
+  <text x="45" y="50" class="text" font-size="28">Alur Live: user baca TBS satu per satu, lalu bisa zoom out</text>
+
+  <rect x="60" y="95" width="255" height="86" rx="8" class="node"/><text x="86" y="130" class="text">App dibuka</text><text x="86" y="158" class="small">Preview aktif, deteksi belum aktif</text>
+  <rect x="380" y="95" width="255" height="86" rx="8" class="node"/><text x="406" y="130" class="text">Tekan Mulai</text><text x="406" y="158" class="small">Status: Deteksi aktif</text>
+  <rect x="700" y="95" width="255" height="86" rx="8" class="node"/><text x="726" y="130" class="text">Frame Kamera</text><text x="726" y="158" class="small">Analyzer membaca frame</text>
+  <path d="M315 138 H375" class="arrow"/><path d="M635 138 H695" class="arrow"/>
+
+  <rect x="700" y="250" width="255" height="86" rx="8" class="node"/><text x="726" y="285" class="text">TFLite Inference</text><text x="726" y="313" class="small">Box, label, confidence</text><path d="M827 181 V245" class="arrow"/>
+  <rect x="380" y="250" width="255" height="86" rx="8" class="decision"/><text x="406" y="285" class="text">Confidence >= 50%?</text><text x="406" y="313" class="small">Syarat masuk overlay/list/DB</text><path d="M700 293 H640" class="arrow"/>
+  <rect x="60" y="250" width="255" height="86" rx="8" class="stop"/><text x="86" y="285" class="text">Di bawah 50%</text><text x="86" y="313" class="small">Tidak disimpan ke list/DB</text><path d="M380 293 H320" class="red"/>
+
+  <rect x="380" y="415" width="255" height="86" rx="8" class="node"/><text x="406" y="450" class="text">Crop + Fingerprint</text><text x="406" y="478" class="small">averageHash untuk dedup</text><path d="M508 336 V410" class="arrow"/>
+  <rect x="60" y="415" width="255" height="86" rx="8" class="decision"/><text x="86" y="450" class="text">TBS sudah ada?</text><text x="86" y="478" class="small">class_id + hamming <= 10</text><path d="M380 458 H320" class="arrow"/>
+  <rect x="60" y="580" width="255" height="86" rx="8" class="save"/><text x="86" y="615" class="text">Tampilkan Tag Lama</text><text x="86" y="643" class="small">Tidak membuat record baru</text><path d="M188 501 V575" class="arrow"/>
+  <rect x="380" y="580" width="255" height="86" rx="8" class="save"/><text x="406" y="615" class="text">Buat Tag TBS Baru</text><text x="406" y="643" class="small">Simpan frame, crop, SQLite</text><path d="M315 458 C350 520 410 540 500 575" class="arrow"/>
+  <rect x="700" y="580" width="255" height="86" rx="8" class="save"/><text x="726" y="615" class="text">Overlay + List Data</text><text x="726" y="643" class="small">Box, kode TBS, summary class</text><path d="M315 623 H695" class="arrow"/><path d="M635 623 H695" class="arrow"/>
+  <rect x="700" y="415" width="255" height="86" rx="8" class="stop"/><text x="726" y="450" class="text">Tekan Stop</text><text x="726" y="478" class="small">Status: Deteksi tidak aktif</text><path d="M827 501 V575" class="red"/>
+</svg>

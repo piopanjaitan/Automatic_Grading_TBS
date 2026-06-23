@@ -1,0 +1,86 @@
+# Default: ignore everything, then allow only Android project essentials.
+*
+
+# Root documentation and Gradle config
+!.gitignore
+!README.md
+!build.gradle
+!settings.gradle
+!gradle.properties
+!gradlew
+!gradlew.bat
+
+# Gradle wrapper
+!gradle/
+!gradle/wrapper/
+!gradle/wrapper/**
+
+# README visual assets
+!readme_assets/
+!readme_assets/**
+
+# Selected user documentation
+!docs/
+docs/*
+!docs/mGradingUSTP_plan.md
+!docs/mGradingUSTP_plan.html
+!docs/mGradingUSTP_plan.pdf
+!docs/mGradingUSTP_teknikal_live_multiobjek.md
+!docs/mGradingUSTP_teknikal_live_multiobjek.html
+!docs/mGradingUSTP_teknikal_live_multiobjek.pdf
+!docs/assets/
+docs/assets/*
+!docs/assets/mgrading_architecture.svg
+!docs/assets/mgrading_ui_menu_status.svg
+!docs/assets/mgrading_storage.svg
+!docs/assets/mgrading_live_flow.svg
+!Live_testing_documentation/
+Live_testing_documentation/*
+!Live_testing_documentation/docs_lapangan/
+!Live_testing_documentation/docs_lapangan/**
+
+# Android app project
+!app/
+!app/build.gradle
+!app/proguard-rules.pro
+!app/src/
+!app/src/**
+
+# Keep lightweight asset instructions and labels, never the model binary.
+!app/src/main/assets/
+!app/src/main/assets/README_MODEL.txt
+!app/src/main/assets/labels.txt
+app/src/main/assets/*.tflite
+
+# ML model, training, and generated runtime outputs
+*.tflite
+*.pt
+*.onnx
+*.engine
+*.mlmodel
+*_saved_model/
+*.npy
+*.npz
+*.zip
+*.rar
+
+# Raw test data, generated documentation, media, and databases
+Screencast_*.webm
+*.mp4
+*.webm
+*.db
+*.db-journal
+*.apk
+*.aab
+
+# Local build, IDE, and environment files
+.gradle/
+build/
+app/build/
+local.properties
+.idea/
+*.iml
+.venv/
+__pycache__/
+.DS_Store
+Thumbs.db

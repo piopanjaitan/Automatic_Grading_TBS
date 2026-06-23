@@ -1,0 +1,10 @@
+category,artifact_or_run,path,format_or_setting,size_mb,latency_preprocess_ms,latency_inference_ms,latency_postprocess_ms,total_latency_ms,estimated_fps,source,notes
+model_size,best_pt,runs/detect/palm_oil_v13/weights/best.pt,PyTorch PT,5.938,,,,,,local_file_stat,"Primary selected model"
+model_size,best_onnx,runs/detect/palm_oil_v13/weights/best.onnx,ONNX,11.783,,,,,,local_file_stat,"Exported ONNX artifact"
+model_size,best_float16_tflite,runs/detect/palm_oil_v13/weights/best_saved_model/best_float16.tflite,TFLite FP16,5.898,,,,,,local_file_stat,"Existing export"
+model_size,best_float32_tflite,runs/detect/palm_oil_v13/weights/best_saved_model/best_float32.tflite,TFLite FP32,11.714,,,,,,local_file_stat,"Existing export"
+model_size,best_int8_tflite,runs/detect/palm_oil_v13/weights/best_saved_model/best_int8.tflite,TFLite INT8,3.194,,,,,,local_file_stat,"Existing export; calibration warning because export used default coco8.yaml"
+model_size,best_full_integer_quant_tflite,runs/detect/palm_oil_v13/weights/best_saved_model/best_full_integer_quant.tflite,TFLite full integer quant,3.120,,,,,,local_file_stat,"Existing export; calibration warning because export used default coco8.yaml"
+model_size,best_integer_quant_tflite,runs/detect/palm_oil_v13/weights/best_saved_model/best_integer_quant.tflite,TFLite integer quant,3.120,,,,,,local_file_stat,"Existing export; calibration warning because export used default coco8.yaml"
+runtime,val6_validation,runs/detect/val6,Ultralytics val GPU,,0.2,1.5,0.2,1.9,526.3,Grading_TPH-Copy1.ipynb cell 8 output,"Per-image validation speed on RTX 5050 Laptop GPU; includes 1403 validation images"
+runtime,single_test_prediction,runs/detect/inferensi_test3,Ultralytics predict GPU,,0.5,11.9,1.1,13.5,74.1,Grading_TPH-Copy1.ipynb cell 8 output,"Single image prediction at shape 1x3x640x352"

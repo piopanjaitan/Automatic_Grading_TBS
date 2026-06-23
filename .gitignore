@@ -30,10 +30,17 @@ pnpm-debug.log*
 dist/
 coverage/
 
+# Dashboard/backend runtime data
+dashboard-nodejs/server/*.db
+dashboard-nodejs/server/*.db-*
+dashboard-nodejs/server/uploads/
+dashboard-nodejs/public/media/
+
 # Android / Gradle
 .gradle/
 build/
 local.properties
+release-apk/
 *.apk
 *.aab
 *.apks
@@ -53,6 +60,15 @@ checkpoints/
 *.tflite
 *.engine
 *.pb
+
+# Keep lightweight dataset metadata and the selected demo model in this repo
+!training-yolo/dataset/
+!training-yolo/dataset/data.yaml
+!training-yolo/dataset/README.dataset.txt
+!training-yolo/dataset/README.roboflow.txt
+!streamlit-demo/Huggingface/
+!streamlit-demo/Huggingface/models/
+!streamlit-demo/Huggingface/models/best.pt
 
 # Large media and archives
 *.zip

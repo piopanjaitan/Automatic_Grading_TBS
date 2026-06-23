@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">mGradingUSTP</string>
+    <string name="status_model_missing">Model TFLite belum tersedia</string>
+    <string name="status_no_detection">Tidak ada objek terdeteksi</string>
+</resources>

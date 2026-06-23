@@ -1,0 +1,23 @@
+[Unit]
+Description=Grading TBS USTP Streamlit CPU-Only Dashboard
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/Grading_TBS_CV_KEL_A_Github/streamlit-demo
+Environment=PYTHON_BIN=/home/ubuntu/Grading_TBS_CV_KEL_A_Github/streamlit-demo/.venv-streamlit-cpu/bin/python
+Environment=STREAMLIT_HOST=127.0.0.1
+Environment=STREAMLIT_PORT=8501
+Environment=CUDA_VISIBLE_DEVICES=
+Environment=STREAMLIT_CPU_THREADS=2
+Environment=STREAMLIT_CPU_IMGSZ=416
+Environment=STREAMLIT_CPU_MAX_DET=20
+Environment=STREAMLIT_CPU_SAVE_INTERVAL=5.0
+Environment=STREAMLIT_CPU_CONTINUOUS_REFRESH=2.0
+ExecStart=/home/ubuntu/Grading_TBS_CV_KEL_A_Github/streamlit-demo/start_cpu_only.sh
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

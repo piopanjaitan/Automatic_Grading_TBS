@@ -1,0 +1,9 @@
+split,class_id,class_name,map50_95
+val,0,kurang masak,0.7540785742716439
+val,1,masak,0.8207093633154694
+val,2,mentah,0.7256812969151579
+val,3,terlalu masak,0.7573635058782383
+test,0,kurang masak,0.7187092912616655
+test,1,masak,0.8419813334240818
+test,2,mentah,0.7413534219442359
+test,3,terlalu masak,0.7607482644559485

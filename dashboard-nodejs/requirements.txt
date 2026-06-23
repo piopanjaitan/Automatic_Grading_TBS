@@ -1,0 +1,2 @@
+# Dashboard lama ini memakai Python standard library saja.
+# File ini sengaja dibiarkan tanpa dependency runtime eksternal.

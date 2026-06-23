@@ -1,0 +1,28 @@
+{
+  "generated_at": "2026-06-10T20:40:43",
+  "source_folder": "/mnt/pioneer/Project_GradingTph_Mobile/Live_testing_documentation",
+  "outputs": {
+    "markdown": "/mnt/pioneer/Project_GradingTph_Mobile/Live_testing_documentation/docs_lapangan/mGradingUSTP_laporan_tes_lapangan.md",
+    "html": "/mnt/pioneer/Project_GradingTph_Mobile/Live_testing_documentation/docs_lapangan/mGradingUSTP_laporan_tes_lapangan.html",
+    "pdf": "/mnt/pioneer/Project_GradingTph_Mobile/Live_testing_documentation/docs_lapangan/mGradingUSTP_laporan_tes_lapangan.pdf"
+  },
+  "summary": {
+    "total_records": 499,
+    "session_count": 8,
+    "min_confidence": 0.5000443458557129,
+    "avg_confidence": 0.7070527739658623,
+    "max_confidence": 0.9107164144515991,
+    "frame_count": 281,
+    "crop_count": 449,
+    "annotated_count": 0,
+    "mp4_files": 6,
+    "unique_videos": 4,
+    "duplicate_video_references": 2
+  },
+  "video_primary_files": [
+    "WhatsApp Video 2026-06-10 at 4.14.10 PM.mp4",
+    "WhatsApp Video 2026-06-10 at 4.21.07 PM.mp4",
+    "WhatsApp Video 2026-06-10 at 4.22.30 PM.mp4",
+    "WhatsApp Video 2026-06-10 at 4.23.56 PM.mp4"
+  ]
+}

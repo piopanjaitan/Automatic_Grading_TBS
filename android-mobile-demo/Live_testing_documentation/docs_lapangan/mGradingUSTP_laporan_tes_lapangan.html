@@ -1,0 +1,100 @@
+<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>mGradingUSTP - Laporan Tes Lapangan</title><style>
+:root{--brand:#0f766e;--ink:#17202a;--muted:#52616f;--line:#d6e0df;--soft:#f6f8fa}
+*{box-sizing:border-box}body{margin:0;background:#f7faf9;color:var(--ink);font-family:Arial,Helvetica,sans-serif;line-height:1.55}.wrap{max-width:1120px;margin:0 auto;padding:34px 28px 64px}.cover{background:var(--brand);color:#fff;border-radius:10px;padding:24px;margin-bottom:24px}.cover h1{margin:0;color:#fff}.cover p{margin:6px 0 0;color:#d9fffa}h1{font-size:34px;color:#0f3f3a;margin:0 0 12px}h2{font-size:25px;margin:34px 0 12px;border-top:1px solid var(--line);padding-top:24px}h3{font-size:19px;margin:22px 0 8px}p{margin:8px 0}.bullet{padding-left:18px;position:relative}.bullet:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--brand);position:absolute;left:2px;top:12px}code{background:#eef6f5;padding:2px 5px;border-radius:4px;font-family:Consolas,monospace;font-size:.94em}table{width:100%;border-collapse:collapse;background:#fff;margin:14px 0 24px;border:1px solid var(--line);border-radius:8px;overflow:hidden}th{background:var(--brand);color:#fff;text-align:left;padding:10px 12px}td{padding:10px 12px;border-top:1px solid var(--line);vertical-align:top}tr:nth-child(even) td{background:#fbfdfc}figure{margin:18px 0 28px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px}figure img{width:100%;height:auto;display:block;border-radius:4px}figcaption{font-size:13px;color:var(--muted);margin-top:8px}@media print{body{background:#fff}.wrap{max-width:none;padding:18px}figure,table{break-inside:avoid}}
+</style></head><body><main class="wrap"><div class="cover"><h1>mGradingUSTP - Laporan Tes Lapangan</h1><p>Dokumentasi tes lapangan - 10 Juni 2026</p></div><h1>mGradingUSTP - Laporan Tes Lapangan</h1>
+<p>Tanggal dokumen: 10 Juni 2026  </p>
+<p>Folder sumber: <code>/mnt/pioneer/Project_GradingTph_Mobile/Live_testing_documentation</code>  </p>
+<p>Project: <code>mGradingUSTP</code></p>
+<h2>Executive Summary</h2>
+<p class="bullet">Tes lapangan menghasilkan 499 record TBS valid dari 8 live session pada rentang 2026-06-10 15:31:23 sampai 2026-06-10 15:51:45 atau sekitar 20.4 menit data tersimpan.</p>
+<p class="bullet">Threshold 50% sudah tercermin di data: confidence minimum record adalah 0.5000, rata-rata 0.7071, dan maksimum 0.9107.</p>
+<p class="bullet">Hasil paling banyak adalah <code>terlalu masak</code> dan <code>masak</code>: 296 record <code>terlalu masak</code> (59.3%) dan 202 record <code>masak</code> (40.5%).</p>
+<p class="bullet">Bukti visual tersedia dari video dan file app, yaitu 6 video MP4 (4 video unik, 2 duplikat/referensi), 281 frame, dan 449 crop. Pada dataset ini belum ditemukan file <code>annotated_*.jpg</code>.</p>
+<figure><img src="assets/charts/field_data_flow.png" alt="Alur data tes lapangan"><figcaption>Alur data tes lapangan</figcaption></figure>
+<h2>1. Sumber Data Lapangan</h2>
+<p>Data yang dianalisis berasal dari video screen recording/WhatsApp, database SQLite app, dan folder gambar app-specific storage.</p>
+<table><thead><tr><th>ID</th><th>Video utama</th><th>Durasi</th><th>Resolusi</th><th>Duplikat/referensi</th></tr></thead><tbody>
+<tr><td>U01</td><td><code>WhatsApp Video 2026-06-10 at 4.14.10 PM.mp4</code></td><td>32.9s</td><td>478x850</td><td>-</td></tr>
+<tr><td>U02</td><td><code>WhatsApp Video 2026-06-10 at 4.21.07 PM.mp4</code></td><td>80.1s</td><td>390x850</td><td>-</td></tr>
+<tr><td>U03</td><td><code>WhatsApp Video 2026-06-10 at 4.22.30 PM.mp4</code></td><td>37.0s</td><td>390x850</td><td>-</td></tr>
+<tr><td>U04</td><td><code>WhatsApp Video 2026-06-10 at 4.23.56 PM.mp4</code></td><td>45.5s</td><td>390x850</td><td>fmzac_WhatsApp Video 2026-06-10 at 4.23.56 PM.mp4; mhiqc_WhatsApp Video 2026-06-10 at 4.23.56 PM.mp4</td></tr>
+</tbody></table>
+<p>File data utama:</p>
+<table><thead><tr><th>Sumber</th><th>Path</th><th>Catatan</th></tr></thead><tbody>
+<tr><td>SQLite</td><td><code>com.ustp.mgrading/files/Documents/mgrading.db</code></td><td>Schema <code>grading_tags</code>, user version 2</td></tr>
+<tr><td>Gambar</td><td><code>com.ustp.mgrading/files/Pictures/grading/20260610/</code></td><td>Berisi frame dan crop hasil simpan app</td></tr>
+<tr><td>Arsip</td><td><code>com.ustp.mgrading.rar</code></td><td>Arsip sumber app data dari perangkat</td></tr>
+</tbody></table>
+<h2>2. Ringkasan Hasil Deteksi</h2>
+<p>Distribusi label menunjukkan mayoritas record tersimpan berasal dari kelas <code>terlalu masak</code>, diikuti <code>masak</code>. Kelas <code>kurang masak</code> hanya muncul satu record dan kelas <code>mentah</code> tidak muncul pada data SQLite lapangan ini.</p>
+<figure><img src="assets/charts/label_distribution.png" alt="Distribusi label"><figcaption>Distribusi label</figcaption></figure>
+<table><thead><tr><th>Label</th><th>Record</th><th>Share</th><th>Confidence rata-rata</th><th>Min</th><th>Max</th></tr></thead><tbody>
+<tr><td>terlalu masak</td><td>296</td><td>59.3%</td><td>0.7019</td><td>0.5000</td><td>0.8683</td></tr>
+<tr><td>masak</td><td>202</td><td>40.5%</td><td>0.7152</td><td>0.5058</td><td>0.9107</td></tr>
+<tr><td>kurang masak</td><td>1</td><td>0.2%</td><td>0.5943</td><td>0.5943</td><td>0.5943</td></tr>
+</tbody></table>
+<figure><img src="assets/charts/label_composition.png" alt="Komposisi label"><figcaption>Komposisi label</figcaption></figure>
+<h2>3. Confidence dan Kualitas Record</h2>
+<p>Sebaran confidence membantu membaca seberapa yakin model pada record yang benar-benar disimpan. Karena app hanya menyimpan data dengan confidence <code>&gt;=50%</code>, grafik dimulai dari 0.50.</p>
+<figure><img src="assets/charts/confidence_histogram.png" alt="Histogram confidence"><figcaption>Histogram confidence</figcaption></figure>
+<table><thead><tr><th>Metrik</th><th>Nilai</th></tr></thead><tbody>
+<tr><td>Total record</td><td>499</td></tr>
+<tr><td>Confidence minimum</td><td>0.5000</td></tr>
+<tr><td>Confidence rata-rata</td><td>0.7071</td></tr>
+<tr><td>Confidence maksimum</td><td>0.9107</td></tr>
+<tr><td>Jumlah live session</td><td>8</td></tr>
+<tr><td>Rentang waktu data tersimpan</td><td>1222.4 detik</td></tr>
+</tbody></table>
+<h2>4. Aktivitas per Live Session</h2>
+<p>Grafik berikut menunjukkan jumlah record yang dibuat pada tiap sesi live. Ini berguna untuk melihat sesi mana yang paling padat dan berpotensi perlu audit duplikasi objek.</p>
+<figure><img src="assets/charts/session_records.png" alt="Record per session"><figcaption>Record per session</figcaption></figure>
+<table><thead><tr><th>Session</th><th>Record</th><th>Confidence rata-rata</th><th>Waktu awal</th><th>Waktu akhir</th><th>Durasi</th></tr></thead><tbody>
+<tr><td><code>LIVE-1781080282621</code></td><td>38</td><td>0.6860</td><td>2026-06-10 15:31:23</td><td>2026-06-10 15:31:49</td><td>26.0s</td></tr>
+<tr><td><code>LIVE-1781080720748</code></td><td>97</td><td>0.7162</td><td>2026-06-10 15:38:41</td><td>2026-06-10 15:38:57</td><td>15.7s</td></tr>
+<tr><td><code>LIVE-1781080794157</code></td><td>95</td><td>0.7251</td><td>2026-06-10 15:39:54</td><td>2026-06-10 15:40:55</td><td>61.0s</td></tr>
+<tr><td><code>LIVE-1781080912053</code></td><td>103</td><td>0.6604</td><td>2026-06-10 15:41:53</td><td>2026-06-10 15:45:37</td><td>224.1s</td></tr>
+<tr><td><code>LIVE-1781081165661</code></td><td>28</td><td>0.8319</td><td>2026-06-10 15:46:06</td><td>2026-06-10 15:46:28</td><td>22.2s</td></tr>
+<tr><td><code>LIVE-1781081310793</code></td><td>44</td><td>0.7076</td><td>2026-06-10 15:48:32</td><td>2026-06-10 15:49:09</td><td>36.6s</td></tr>
+<tr><td><code>LIVE-1781081390533</code></td><td>43</td><td>0.7124</td><td>2026-06-10 15:49:53</td><td>2026-06-10 15:50:23</td><td>30.1s</td></tr>
+<tr><td><code>LIVE-1781081455238</code></td><td>51</td><td>0.6925</td><td>2026-06-10 15:50:57</td><td>2026-06-10 15:51:45</td><td>48.1s</td></tr>
+</tbody></table>
+<h2>5. Capture dari Video Lapangan</h2>
+<p>Capture berikut diambil otomatis dari awal, tengah, dan akhir setiap video unik. File video duplikat tetap dicatat sebagai referensi sumber, tetapi tidak dianalisis berulang agar dokumentasi tidak menggandakan skenario yang sama.</p>
+<h3>Capture U01 - WhatsApp Video 2026-06-10 at 4.14.10 PM.mp4</h3>
+<figure><img src="assets/captures/U01_contact_sheet.jpg" alt="Contact sheet U01"><figcaption>Contact sheet U01</figcaption></figure>
+<h3>Capture U02 - WhatsApp Video 2026-06-10 at 4.21.07 PM.mp4</h3>
+<figure><img src="assets/captures/U02_contact_sheet.jpg" alt="Contact sheet U02"><figcaption>Contact sheet U02</figcaption></figure>
+<h3>Capture U03 - WhatsApp Video 2026-06-10 at 4.22.30 PM.mp4</h3>
+<figure><img src="assets/captures/U03_contact_sheet.jpg" alt="Contact sheet U03"><figcaption>Contact sheet U03</figcaption></figure>
+<h3>Capture U04 - WhatsApp Video 2026-06-10 at 4.23.56 PM.mp4</h3>
+<figure><img src="assets/captures/U04_contact_sheet.jpg" alt="Contact sheet U04"><figcaption>Contact sheet U04</figcaption></figure>
+<p>Catatan: file referensi/duplikat untuk video ini: <code>fmzac_WhatsApp Video 2026-06-10 at 4.23.56 PM.mp4; mhiqc_WhatsApp Video 2026-06-10 at 4.23.56 PM.mp4</code>.</p>
+<h2>6. Bukti Gambar dari App</h2>
+<p>Folder app menyimpan 281 frame penuh dan 449 crop objek. Grid berikut memakai crop dengan confidence tinggi dan beberapa label berbeda sebagai contoh bukti visual record yang masuk SQLite.</p>
+<figure><img src="assets/images/sample_crops_grid.jpg" alt="Contoh crop TBS tersimpan"><figcaption>Contoh crop TBS tersimpan</figcaption></figure>
+<p>Contoh frame penuh dari record tersimpan:</p>
+<figure><img src="assets/images/sample_frames_grid.jpg" alt="Contoh frame tersimpan"><figcaption>Contoh frame tersimpan</figcaption></figure>
+<h2>7. Catatan Teknis</h2>
+<p class="bullet">DB lapangan memakai table <code>grading_tags</code> dengan schema yang sesuai aplikasi: <code>tag_code</code>, <code>label</code>, <code>confidence</code>, bbox, path gambar, fingerprint, session, dan timestamp.</p>
+<p class="bullet">Prefix tag pada dataset sudah memakai <code>TBS-xxxxxx</code>, sesuai perubahan terminologi terbaru.</p>
+<p class="bullet">Tidak ada record dengan confidence di bawah 0.50, sehingga aturan simpan/list 50% berjalan sesuai desain.</p>
+<p class="bullet">Field <code>annotated_image_path</code> tersedia di schema, tetapi dataset folder ini tidak memuat file <code>annotated_*.jpg</code>. Ini berarti dokumentasi foto beranotasi belum bisa dibuktikan dari paket data lapangan ini.</p>
+<p class="bullet">Semua record memiliki <code>seen_count = 1</code> pada sampel awal dan top confidence yang diperiksa, sehingga audit lanjutan perlu melihat apakah dedup objek sama sudah cukup kuat pada semua skenario.</p>
+<h2>8. Rekomendasi Lanjutan</h2>
+<p class="numbered">1. Tambahkan export CSV/ZIP dari app agar data lapangan bisa dibagikan tanpa Device Explorer.</p>
+<p class="numbered">2. Pastikan mode <code>Foto</code> selalu menghasilkan dan menyimpan <code>annotated_*.jpg</code>, lalu masukkan path-nya ke <code>annotated_image_path</code>.</p>
+<p class="numbered">3. Tambahkan validasi manual ground truth untuk sebagian crop/frame supaya laporan berikutnya bisa menghitung precision, recall, dan error label.</p>
+<p class="numbered">4. Pertimbangkan halaman filter di menu Data: filter session, label, tanggal, dan confidence.</p>
+<p class="numbered">5. Untuk mengurangi potensi duplikasi pada live zoom out, tambahkan evaluasi tracking berbasis IoU antar-frame atau embedding ringan selain average hash.</p>
+<h2>9. Artefak Pendukung</h2>
+<table><thead><tr><th>Artefak</th><th>Path</th></tr></thead><tbody>
+<tr><td>Ringkasan video</td><td><code>assets/tables/video_inventory.csv</code></td></tr>
+<tr><td>Capture video</td><td><code>assets/tables/video_captures.csv</code></td></tr>
+<tr><td>Ringkasan label</td><td><code>assets/tables/label_summary.csv</code></td></tr>
+<tr><td>Ringkasan session</td><td><code>assets/tables/session_summary.csv</code></td></tr>
+<tr><td>Top confidence records</td><td><code>assets/tables/top_confidence_records.csv</code></td></tr>
+<tr><td>Chart label</td><td><code>assets/charts/label_distribution.png</code></td></tr>
+<tr><td>Chart session</td><td><code>assets/charts/session_records.png</code></td></tr>
+<tr><td>Histogram confidence</td><td><code>assets/charts/confidence_histogram.png</code></td></tr>
+<tr><td>Grid crop</td><td><code>assets/images/sample_crops_grid.jpg</code></td></tr>
+</tbody></table></main></body></html>

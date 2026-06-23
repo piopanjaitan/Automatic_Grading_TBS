@@ -1,0 +1,229 @@
+<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>mGradingUSTP - Dokumentasi Teknikal Live Multi-Objek TBS</title><style>
+:root{color-scheme:light;--ink:#17202a;--muted:#52616f;--brand:#0f766e;--line:#d6e0df;--soft:#f5f8f8;--code:#eef6f5}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f7faf9;color:var(--ink);line-height:1.55}.wrap{max-width:1120px;margin:0 auto;padding:34px 28px 64px}h1{font-size:34px;margin:0 0 12px;color:#0f3f3a}h2{font-size:25px;margin:34px 0 12px;border-top:1px solid var(--line);padding-top:24px}h3{font-size:20px;margin:24px 0 8px}p{margin:8px 0;color:var(--ink)}.bullet{padding-left:18px;position:relative}.bullet:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--brand);position:absolute;left:2px;top:13px}code{background:var(--code);padding:2px 5px;border-radius:4px;font-family:Consolas,Monaco,monospace;font-size:.94em}pre{background:#0b1220;color:#e5f3f0;padding:16px;border-radius:8px;overflow:auto}pre code{background:transparent;color:inherit;padding:0}table{width:100%;border-collapse:collapse;background:#fff;margin:14px 0 24px;border:1px solid var(--line);border-radius:8px;overflow:hidden}th{background:#0f766e;color:#fff;text-align:left;padding:10px 12px;font-weight:700}td{padding:10px 12px;border-top:1px solid var(--line);vertical-align:top}tr:nth-child(even) td{background:#fbfdfc}figure{margin:20px 0 30px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px}figure img{width:100%;height:auto;display:block}figcaption{font-size:13px;color:var(--muted);margin-top:8px}.cover{background:#0f766e;color:white;border-radius:10px;padding:22px 24px;margin-bottom:24px}.cover h1{color:white;margin:0}.cover p{color:#d9fffa;margin:6px 0 0}@media print{body{background:#fff}.wrap{max-width:none;padding:18px}figure{break-inside:avoid}table{break-inside:avoid}}
+</style></head><body><main class="wrap"><div class="cover"><h1>mGradingUSTP - Dokumentasi Teknikal Live Multi-Objek TBS</h1><p>Project mGradingUSTP - diperbarui 9 Juni 2026</p></div><h1>mGradingUSTP - Dokumentasi Teknikal Live Multi-Objek TBS</h1>
+<p>Tanggal dokumen: 9 Juni 2026</p>
+<p>Project: <code>mGradingUSTP</code></p>
+<p>Lokasi project: <code>/mnt/pioneer/Project_GradingTph_Mobile</code></p>
+<h2>1. Ringkasan Status Terbaru</h2>
+<p>Aplikasi Android <code>mGradingUSTP</code> sekarang diarahkan untuk grading TBS secara mobile dengan dua mode: live camera dan foto. Kamera boleh menampilkan preview sejak app dibuka, tetapi proses deteksi tidak berjalan sebelum user menekan tombol <code>Mulai</code>.</p>
+<table>
+<thead><tr><th>Area</th><th>Status terbaru</th><th>Catatan</th></tr></thead>
+<tbody>
+<tr><td>Terminologi</td><td>TBS</td><td>Nama tag baru memakai prefix <code>TBS-xxxxxx</code>; data lama <code>TPH-</code> dimigrasikan ke <code>TBS-</code>.</td></tr>
+<tr><td>Mulai/Stop</td><td>Implemented</td><td>Deteksi live hanya aktif setelah <code>Mulai</code>; <code>Stop</code> menghentikan analyzer dan auto-save.</td></tr>
+<tr><td>Status kanan atas</td><td>Implemented</td><td><code>Deteksi aktif</code> saat live berjalan dan <code>Deteksi tidak aktif</code> saat stop/awal app.</td></tr>
+<tr><td>Threshold simpan/list</td><td>50%</td><td>Data masuk overlay, list, dan SQLite hanya jika confidence <code>&gt;= 0.50</code>.</td></tr>
+<tr><td>Menu Data</td><td>Implemented</td><td>Tombol <code>Data</code> membuka daftar record TBS tersimpan dari SQLite.</td></tr>
+<tr><td>SQLite external</td><td>Implemented</td><td>DB tersimpan sebagai <code>mgrading.db</code> di external app-specific storage.</td></tr>
+<tr><td>Foto anotasi</td><td>Implemented</td><td>Frame/crop/foto beranotasi disimpan sebagai JPEG.</td></tr>
+</tbody></table>
+<figure><img src="assets/mgrading_architecture.svg" alt="Arsitektur mGradingUSTP"><figcaption>Arsitektur mGradingUSTP</figcaption></figure>
+<h2>2. User Flow Lapangan</h2>
+<p>1. User membuka app; kamera preview tampil, tetapi deteksi belum aktif.</p>
+<p>2. User menekan <code>Mulai</code>; status kanan atas berubah menjadi <code>Deteksi aktif</code>.</p>
+<p>3. User mengarahkan kamera ke satu TBS atau berondolan.</p>
+<p>4. Jika confidence <code>&gt;=50%</code>, app memberi tag <code>TBS-xxxxxx</code>, menyimpan gambar, dan mencatat data ke SQLite.</p>
+<p>5. Jika user mengarah ke objek yang sama, app menampilkan tag lama dan tidak membuat record baru.</p>
+<p>6. Jika user pindah ke objek lain, app membuat tag baru jika fingerprint tidak cocok dengan data lama.</p>
+<p>7. Jika user zoom out, beberapa TBS bisa tampil bersamaan dan semua objek valid diproses.</p>
+<p>8. User menekan <code>Foto</code>; app menyimpan foto hasil deteksi/anotasi keseluruhan.</p>
+<p>9. User menekan <code>Stop</code>; status berubah menjadi <code>Deteksi tidak aktif</code> dan deteksi berhenti.</p>
+<p>10. User menekan <code>Data</code> untuk melihat record TBS tersimpan.</p>
+<figure><img src="assets/mgrading_ui_menu_status.svg" alt="UI status dan menu Data"><figcaption>UI status dan menu Data</figcaption></figure>
+<h2>3. Arsitektur Aplikasi</h2>
+<table>
+<thead><tr><th>Layer</th><th>Komponen</th><th>Tanggung jawab</th></tr></thead>
+<tbody>
+<tr><td>UI</td><td><code>DetectionActivity</code>, XML layout, ViewBinding</td><td>Kamera, tombol <code>Mulai</code>, <code>Stop</code>, <code>Foto</code>, <code>Galeri</code>, <code>Data</code>, status badge, overlay, list hasil.</td></tr>
+<tr><td>ViewModel</td><td><code>DetectionViewModel</code></td><td>State deteksi aktif/tidak, sesi live, threshold 50%, tagging multi-objek, summary.</td></tr>
+<tr><td>ML</td><td><code>TfliteDetector</code>, <code>DetectionResult</code></td><td>Inference TFLite, decode YOLO, confidence raw, NMS, mapping label.</td></tr>
+<tr><td>Storage</td><td><code>GradingTagRepository</code>, <code>GradingDbHelper</code></td><td>SQLite external, migrasi <code>TPH-</code> ke <code>TBS-</code>, query match, insert/update tag.</td></tr>
+<tr><td>File</td><td><code>GradingImageStore</code></td><td>Simpan <code>frame_*.jpg</code>, <code>crop_*.jpg</code>, dan <code>annotated_*.jpg</code>.</td></tr>
+<tr><td>Data UI</td><td><code>SavedTagsActivity</code>, <code>GradingTagAdapter</code></td><td>Menampilkan total, ringkasan kelas, thumbnail, tag, confidence, waktu, dan path DB.</td></tr>
+</tbody></table>
+<h2>4. Aturan Deteksi Live</h2>
+<figure><img src="assets/mgrading_live_flow.svg" alt="Flow live multi-objek"><figcaption>Flow live multi-objek</figcaption></figure>
+<h3>4.1 Deteksi harus dimulai manual</h3>
+<p>Ketika app baru dibuka:</p>
+<p class="bullet">- Kamera preview tetap aktif.</p>
+<p class="bullet">- <code>liveDetectionActive = false</code>.</p>
+<p class="bullet">- Analyzer tidak menjalankan inference untuk auto-detection.</p>
+<p class="bullet">- Status kanan atas menampilkan <code>Deteksi tidak aktif</code>.</p>
+<p>Saat user menekan <code>Mulai</code>:</p>
+<p class="bullet">- <code>DetectionActivity</code> memanggil start live detection.</p>
+<p class="bullet">- <code>DetectionViewModel.startLiveSession()</code> membuat <code>sessionId</code> baru dengan format <code>LIVE-{timestamp}</code>.</p>
+<p class="bullet">- <code>sessionSeenTagIds</code> dikosongkan.</p>
+<p class="bullet">- Status berubah menjadi <code>Deteksi aktif</code>.</p>
+<p>Saat user menekan <code>Stop</code>:</p>
+<p class="bullet">- Analyzer berhenti memproses frame.</p>
+<p class="bullet">- Overlay aktif dibersihkan.</p>
+<p class="bullet">- Status berubah menjadi <code>Deteksi tidak aktif</code>.</p>
+<p class="bullet">- Kamera tetap bisa menampilkan preview.</p>
+<h3>4.2 Threshold simpan/list 50%</h3>
+<p>Ada dua jenis threshold:</p>
+<table>
+<thead><tr><th>Threshold</th><th>Nilai</th><th>Dipakai untuk</th></tr></thead>
+<tbody>
+<tr><td>Raw inference threshold</td><td><code>0.25</code></td><td>Membatasi kandidat awal dari model TFLite.</td></tr>
+<tr><td>Auto-save/list threshold</td><td><code>0.50</code></td><td>Syarat objek masuk overlay final, list, foto, dan SQLite.</td></tr>
+<tr><td>IoU/NMS threshold</td><td><code>0.45</code></td><td>Menghapus box duplikat yang terlalu overlap.</td></tr>
+<tr><td>Fingerprint match distance</td><td><code>&lt;=10</code></td><td>Menentukan apakah objek baru cocok dengan record lama.</td></tr>
+</tbody></table>
+<p>Pseudo-flow tagging:</p>
+<pre><code>
+for each detection:
+
+  if liveDetectionActive is false:
+
+    skip inference/live save
+
+  if confidence &lt; 0.50:
+
+    show no saved tag and do not insert DB
+
+  crop object from frame
+
+  calculate averageHash fingerprint
+
+  search SQLite by class_id and fingerprint distance
+
+  if match found:
+
+    show existing TBS tag
+
+    update last_seen/seen_count once per session
+
+  else:
+
+    save frame and crop image
+
+    insert SQLite record
+
+    generate TBS-xxxxxx tag
+
+</code></pre>
+<h2>5. Mode Foto</h2>
+<p>Mode foto tetap menjalankan detection pada gambar yang diambil user. Perilaku yang dipakai sama dengan live mode untuk data valid:</p>
+<p class="bullet">- Objek dengan confidence <code>&gt;=50%</code> diberi tag dan masuk summary.</p>
+<p class="bullet">- Foto final dibuat sebagai <code>annotated_*.jpg</code> dengan bounding box dan tag TBS.</p>
+<p class="bullet">- Record SQLite terkait di-update dengan <code>annotated_image_path</code>.</p>
+<p class="bullet">- Saat foto diproses, analyzer live dipause agar overlay foto tidak tertimpa frame live berikutnya.</p>
+<h2>6. Menu Data dan Form Daftar Tersimpan</h2>
+<p>Menu <code>Data</code> membuka halaman <code>Data TBS Tersimpan</code>. Halaman ini dibuat agar user bisa mengaudit hasil deteksi yang sudah masuk SQLite.</p>
+<table>
+<thead><tr><th>Elemen halaman</th><th>Isi</th></tr></thead>
+<tbody>
+<tr><td>Header</td><td>Judul <code>Data TBS Tersimpan</code>, tombol kembali, tombol refresh.</td></tr>
+<tr><td>Ringkasan total</td><td>Jumlah record TBS tersimpan.</td></tr>
+<tr><td>Ringkasan kelas</td><td>Jumlah data per label, misalnya <code>masak</code>, <code>mentah</code>, <code>kurang masak</code>, <code>terlalu masak</code>.</td></tr>
+<tr><td>Path DB</td><td>Lokasi file <code>mgrading.db</code> di external app storage.</td></tr>
+<tr><td>List record</td><td>Thumbnail, kode <code>TBS-xxxxxx</code>, label, confidence, waktu terlihat, dan seen count.</td></tr>
+</tbody></table>
+<h2>7. Storage dan SQLite</h2>
+<figure><img src="assets/mgrading_storage.svg" alt="Storage mGradingUSTP"><figcaption>Storage mGradingUSTP</figcaption></figure>
+<h3>7.1 Path database</h3>
+<pre><code>
+/sdcard/Android/data/com.ustp.mgrading/files/Documents/mgrading.db
+
+</code></pre>
+<p>Di Android Studio Device Explorer:</p>
+<pre><code>
+storage/emulated/0/Android/data/com.ustp.mgrading/files/Documents/mgrading.db
+
+</code></pre>
+<h3>7.2 Path gambar</h3>
+<pre><code>
+/sdcard/Android/data/com.ustp.mgrading/files/Pictures/grading/YYYYMMDD/
+
+</code></pre>
+<table>
+<thead><tr><th>Prefix file</th><th>Isi</th></tr></thead>
+<tbody>
+<tr><td><code>frame_*.jpg</code></td><td>Frame penuh saat objek valid disimpan.</td></tr>
+<tr><td><code>crop_*.jpg</code></td><td>Crop objek TBS/berondolan.</td></tr>
+<tr><td><code>annotated_*.jpg</code></td><td>Foto penuh dengan bounding box dan tag.</td></tr>
+</tbody></table>
+<h3>7.3 Schema SQLite</h3>
+<p>Tabel: <code>grading_tags</code></p>
+<p>Database version: <code>2</code></p>
+<table>
+<thead><tr><th>Kolom</th><th>Tipe</th><th>Keterangan</th></tr></thead>
+<tbody>
+<tr><td><code>id</code></td><td>INTEGER PK</td><td>ID auto increment.</td></tr>
+<tr><td><code>tag_code</code></td><td>TEXT UNIQUE</td><td>Kode tag, contoh <code>TBS-000140</code>.</td></tr>
+<tr><td><code>class_id</code></td><td>INTEGER</td><td>ID kelas model.</td></tr>
+<tr><td><code>label</code></td><td>TEXT</td><td>Label grading.</td></tr>
+<tr><td><code>confidence</code></td><td>REAL</td><td>Confidence tertinggi yang tersimpan.</td></tr>
+<tr><td><code>bbox_left/top/right/bottom</code></td><td>REAL</td><td>Koordinat bounding box.</td></tr>
+<tr><td><code>image_path</code></td><td>TEXT</td><td>Path frame penuh.</td></tr>
+<tr><td><code>crop_path</code></td><td>TEXT</td><td>Path crop objek.</td></tr>
+<tr><td><code>annotated_image_path</code></td><td>TEXT</td><td>Path foto penuh beranotasi.</td></tr>
+<tr><td><code>fingerprint</code></td><td>TEXT</td><td>Average hash crop untuk dedup.</td></tr>
+<tr><td><code>session_id</code></td><td>TEXT</td><td>ID sesi live atau foto.</td></tr>
+<tr><td><code>created_at</code></td><td>INTEGER</td><td>Timestamp record dibuat.</td></tr>
+<tr><td><code>last_seen_at</code></td><td>INTEGER</td><td>Timestamp terakhir terlihat.</td></tr>
+<tr><td><code>seen_count</code></td><td>INTEGER</td><td>Jumlah kemunculan terhitung.</td></tr>
+</tbody></table>
+<p>Migration penting:</p>
+<p class="bullet">- DB lama <code>mgrading_ustp.db</code> disalin sekali ke <code>mgrading.db</code> jika file external belum ada.</p>
+<p class="bullet">- Upgrade schema memakai <code>ALTER TABLE</code>, tidak drop data.</p>
+<p class="bullet">- Record lama dengan <code>tag_code</code> prefix <code>TPH-</code> dimigrasikan menjadi <code>TBS-</code>.</p>
+<h2>8. Model TFLite</h2>
+<pre><code>
+app/src/main/assets/grading_tph_int8.tflite
+
+</code></pre>
+<p>Nama file asset masih mengandung <code>tph</code> untuk menjaga kompatibilitas kode dan file training lama. Nama produk, tag, dan UI sudah memakai istilah TBS.</p>
+<table>
+<thead><tr><th>ID</th><th>Label</th></tr></thead>
+<tbody>
+<tr><td>0</td><td><code>kurang masak</code></td></tr>
+<tr><td>1</td><td><code>masak</code></td></tr>
+<tr><td>2</td><td><code>mentah</code></td></tr>
+<tr><td>3</td><td><code>terlalu masak</code></td></tr>
+</tbody></table>
+<h2>9. Acceptance Test</h2>
+<table>
+<thead><tr><th>Skenario</th><th>Langkah</th><th>Hasil yang diharapkan</th></tr></thead>
+<tbody>
+<tr><td>Awal app</td><td>Buka app</td><td>Preview tampil, status <code>Deteksi tidak aktif</code>, belum ada inference live.</td></tr>
+<tr><td>Start live</td><td>Tekan <code>Mulai</code></td><td>Status <code>Deteksi aktif</code>, tombol Mulai menjadi mode live, analyzer berjalan.</td></tr>
+<tr><td>Stop live</td><td>Tekan <code>Stop</code></td><td>Status <code>Deteksi tidak aktif</code>, overlay aktif hilang, auto-save berhenti.</td></tr>
+<tr><td>Threshold 50%</td><td>Arahkan ke objek confidence <code>&gt;=50%</code></td><td>Tag TBS muncul dan data masuk list/DB.</td></tr>
+<tr><td>Di bawah 50%</td><td>Arahkan ke objek confidence <code>&lt;50%</code></td><td>Tidak disimpan ke list/DB.</td></tr>
+<tr><td>Objek sama</td><td>Tetap arahkan kamera ke TBS yang sama</td><td>Tag lama tampil, record baru tidak dibuat.</td></tr>
+<tr><td>Objek lain</td><td>Pindah ke TBS lain</td><td>Tag baru dibuat jika fingerprint berbeda.</td></tr>
+<tr><td>Zoom out</td><td>Kamera melihat banyak TBS</td><td>Semua objek valid diproses dan diberi tag.</td></tr>
+<tr><td>Foto final</td><td>Tekan <code>Foto</code></td><td>Foto beranotasi tersimpan.</td></tr>
+<tr><td>Menu Data</td><td>Tekan <code>Data</code></td><td>Halaman daftar TBS tersimpan terbuka.</td></tr>
+</tbody></table>
+<p>Command build:</p>
+<pre><code>
+JAVA_HOME=/usr/lib/jvm/java-17-openjdk ./gradlew --no-daemon --console=plain assembleDebug
+
+</code></pre>
+<p>Path APK debug:</p>
+<pre><code>
+app/build/outputs/apk/debug/app-debug.apk
+
+</code></pre>
+<h2>10. Risiko Teknis</h2>
+<p class="bullet">- Fingerprint average hash ringan untuk mobile, tetapi belum setara object tracking penuh.</p>
+<p class="bullet">- Objek yang sangat mirip, sangat dekat, dan berada pada sudut kamera yang sama bisa dianggap match.</p>
+<p class="bullet">- Threshold 50% membuat app lebih mudah menyimpan objek valid, tetapi data bisa lebih banyak sehingga review pada menu Data menjadi penting.</p>
+<p class="bullet">- External app-specific storage mudah dilihat lewat Device Explorer, tetapi akan ikut hilang jika app di-uninstall.</p>
+<h2>11. Ringkasan File Implementasi</h2>
+<table>
+<thead><tr><th>File</th><th>Fungsi</th></tr></thead>
+<tbody>
+<tr><td><code>DetectionActivity.java</code></td><td>UI, CameraX, tombol Mulai/Stop/Foto/Galeri/Data, status badge.</td></tr>
+<tr><td><code>DetectionViewModel.java</code></td><td>State live, threshold 50%, multi-object tagging, summary.</td></tr>
+<tr><td><code>SavedTagsActivity.java</code></td><td>Halaman Data TBS Tersimpan.</td></tr>
+<tr><td><code>activity_detection.xml</code></td><td>Layout kamera, overlay, kontrol bawah, status kanan atas.</td></tr>
+<tr><td><code>activity_saved_tags.xml</code></td><td>Layout daftar data tersimpan.</td></tr>
+<tr><td><code>GradingTagRepository.java</code></td><td>Insert/update/query SQLite, tag TBS, migrasi prefix.</td></tr>
+<tr><td><code>GradingDbHelper.java</code></td><td>External DB dan migration schema.</td></tr>
+<tr><td><code>GradingImageStore.java</code></td><td>Simpan frame/crop/annotated JPEG.</td></tr>
+<tr><td><code>OverlayView.java</code></td><td>Render bounding box dan label TBS.</td></tr>
+</tbody></table></main></body></html>

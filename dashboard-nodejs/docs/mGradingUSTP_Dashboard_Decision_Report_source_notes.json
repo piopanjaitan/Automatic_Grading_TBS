@@ -1,0 +1,180 @@
+{
+  "report": "/mnt/pioneer/Project_mGradingUSTP_Dashboard/Streamlit_CPU_Only/docs/mGradingUSTP_Dashboard_Decision_Report.html",
+  "source_database": "/mnt/pioneer/Project_mGradingUSTP_Dashboard/server/mgrading_dashboard.db",
+  "source_table": "detections",
+  "generated_at": "2026-06-22T13:10:34",
+  "summary": {
+    "total": 790,
+    "sessions": 20,
+    "dates": 5,
+    "avg_conf": 0.7365849440610861,
+    "min_conf": 0.5000443458557129,
+    "max_conf": 0.9386078715324402,
+    "frame_images": 675,
+    "crop_images": 740,
+    "annotated_images": 9,
+    "first_ms": 1780367256279,
+    "last_ms": 1781876136930,
+    "devices": 2
+  },
+  "label_summary": [
+    {
+      "label": "terlalu masak",
+      "count": 406,
+      "avg_conf": 0.7149753222618197,
+      "share": 0.5139240506329114
+    },
+    {
+      "label": "masak",
+      "count": 282,
+      "avg_conf": 0.7527002941632102,
+      "share": 0.3569620253164557
+    },
+    {
+      "label": "kurang masak",
+      "count": 97,
+      "avg_conf": 0.7837306138166448,
+      "share": 0.12278481012658228
+    },
+    {
+      "label": "mentah",
+      "count": 5,
+      "avg_conf": 0.6677544951438904,
+      "share": 0.006329113924050633
+    }
+  ],
+  "date_summary": [
+    {
+      "date": "2026-06-02",
+      "count": 53,
+      "avg_conf": 0.8262907356586097,
+      "sessions": 1,
+      "avg_conf_pct": 82.62907356586096
+    },
+    {
+      "date": "2026-06-05",
+      "count": 2,
+      "avg_conf": 0.9224636554718018,
+      "sessions": 1,
+      "avg_conf_pct": 92.24636554718018
+    },
+    {
+      "date": "2026-06-09",
+      "count": 102,
+      "avg_conf": 0.8094919487541797,
+      "sessions": 4,
+      "avg_conf_pct": 80.94919487541797
+    },
+    {
+      "date": "2026-06-10",
+      "count": 499,
+      "avg_conf": 0.7070527739658623,
+      "sessions": 8,
+      "avg_conf_pct": 70.70527739658623
+    },
+    {
+      "date": "2026-06-19",
+      "count": 134,
+      "avg_conf": 0.7528078845187799,
+      "sessions": 6,
+      "avg_conf_pct": 75.280788451878
+    }
+  ],
+  "confidence_buckets": [
+    {
+      "bucket": "0.5-0.6",
+      "count": 140
+    },
+    {
+      "bucket": "0.6-0.7",
+      "count": 157
+    },
+    {
+      "bucket": "0.7-0.8",
+      "count": 212
+    },
+    {
+      "bucket": "0.8-0.9",
+      "count": 234
+    },
+    {
+      "bucket": "0.9-1.0",
+      "count": 47
+    }
+  ],
+  "top_sessions": [
+    {
+      "session_id": "LIVE-1781080912053",
+      "count": 103,
+      "avg_conf": 0.6603563971889829,
+      "avg_conf_pct": 66.03563971889828
+    },
+    {
+      "session_id": "LIVE-1781080720748",
+      "count": 97,
+      "avg_conf": 0.7162219163068791,
+      "avg_conf_pct": 71.62219163068791
+    },
+    {
+      "session_id": "LIVE-1781080794157",
+      "count": 95,
+      "avg_conf": 0.7250747950453508,
+      "avg_conf_pct": 72.50747950453508
+    },
+    {
+      "session_id": "LIVE-1781853269071",
+      "count": 66,
+      "avg_conf": 0.7414978191708074,
+      "avg_conf_pct": 74.14978191708073
+    },
+    {
+      "session_id": "LIVE-1780992550574",
+      "count": 59,
+      "avg_conf": 0.8090226023884143,
+      "avg_conf_pct": 80.90226023884142
+    },
+    {
+      "session_id": "LIVE-1781876107916",
+      "count": 56,
+      "avg_conf": 0.7717949833188739,
+      "avg_conf_pct": 77.17949833188739
+    },
+    {
+      "session_id": "NO_SESSION",
+      "count": 53,
+      "avg_conf": 0.8262907356586097,
+      "avg_conf_pct": 82.62907356586096
+    },
+    {
+      "session_id": "LIVE-1781081455238",
+      "count": 51,
+      "avg_conf": 0.6925177737778309,
+      "avg_conf_pct": 69.25177737778309
+    }
+  ],
+  "chart_map": [
+    {
+      "section": "Label Mix Should Be A First-Class Monitoring View",
+      "family": "bar",
+      "path": "/mnt/pioneer/Project_mGradingUSTP_Dashboard/Streamlit_CPU_Only/docs/report_assets/label_mix.png",
+      "claim": "Label mix is concentrated in terlalu masak and masak."
+    },
+    {
+      "section": "Volume Is Sufficient, But Session Peaks Need Operational Context",
+      "family": "bar plus line",
+      "path": "/mnt/pioneer/Project_mGradingUSTP_Dashboard/Streamlit_CPU_Only/docs/report_assets/daily_volume_confidence.png",
+      "claim": "June 10 carries most volume and confidence varies by date."
+    },
+    {
+      "section": "Confidence Quality Needs Monitoring, Not Immediate Redesign",
+      "family": "bar",
+      "path": "/mnt/pioneer/Project_mGradingUSTP_Dashboard/Streamlit_CPU_Only/docs/report_assets/confidence_distribution.png",
+      "claim": "Confidence is usable but uneven."
+    }
+  ],
+  "limitations": [
+    "No external warehouse validation.",
+    "No team communication context.",
+    "Seaborn unavailable locally, charts rendered with Matplotlib."
+  ]
+}

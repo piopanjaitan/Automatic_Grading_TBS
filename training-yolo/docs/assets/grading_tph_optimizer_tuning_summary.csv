@@ -1,0 +1,5 @@
+optimizer,status,best_epoch,best_precision,best_recall,best_map50,best_map50_95,best_val_loss,objective_score,elapsed_s,run_dir,error
+SGD,ok,20,0.90006,0.93418,0.96327,0.75326,2.27206,0.39095840000000004,360.53,/home/ridwan/Documents/Final_Project/Grading_TPH/runs/detect/runs/tune_optimizer/optimizer_sgd_20ep,
+Adam,ok,20,0.88275,0.89713,0.94619,0.73101,2.36673,0.3697032,369.98,/home/ridwan/Documents/Final_Project/Grading_TPH/runs/detect/runs/tune_optimizer/optimizer_adam_20ep,
+AdamW,ok,20,0.86906,0.93114,0.95619,0.7397,2.3271100000000002,0.3781633999999999,371.8,/home/ridwan/Documents/Final_Project/Grading_TPH/runs/detect/runs/tune_optimizer/optimizer_adamw_20ep,
+MuSGD,ok,20,0.92168,0.93007,0.96899,0.76267,2.2561400000000003,0.39850059999999987,417.04,/home/ridwan/Documents/Final_Project/Grading_TPH/runs/detect/runs/tune_optimizer/optimizer_musgd_20ep,

@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="640" viewBox="0 0 1160 640" role="img" aria-label="Arsitektur teknikal mGradingUSTP">
+  <defs>
+    <style>
+      .bg{fill:#f6f8fa}.head{fill:#0f766e}.card{fill:#fff;stroke:#c8d7d5;stroke-width:2}.blue{fill:#e8f1ff;stroke:#2b6cb0;stroke-width:2}.green{fill:#e7f7ef;stroke:#18805a;stroke-width:2}.orange{fill:#fff4e2;stroke:#b7791f;stroke-width:2}.purple{fill:#f2e8ff;stroke:#6b46c1;stroke-width:2}.text{font-family:Arial,Helvetica,sans-serif;fill:#1f2933;font-size:21px;font-weight:700}.small{font-family:Arial,Helvetica,sans-serif;fill:#52616f;font-size:16px}.white{font-family:Arial,Helvetica,sans-serif;fill:#fff;font-size:25px;font-weight:700}.arrow{stroke:#0f766e;stroke-width:4;fill:none;marker-end:url(#arrow)}
+    </style>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M2,2 L10,6 L2,10 Z" fill="#0f766e"/></marker>
+  </defs>
+  <rect class="bg" width="1160" height="640"/>
+  <rect x="32" y="28" width="1096" height="72" rx="8" class="head"/>
+  <text x="58" y="73" class="white">mGradingUSTP - Arsitektur Deteksi TBS Live dan Foto</text>
+
+  <rect x="58" y="136" width="245" height="150" rx="8" class="blue"/>
+  <text x="84" y="176" class="text">CameraX</text>
+  <text x="84" y="210" class="small">Preview tetap tampil</text>
+  <text x="84" y="234" class="small">ImageAnalysis live</text>
+  <text x="84" y="258" class="small">ImageCapture foto JPEG</text>
+
+  <rect x="378" y="136" width="245" height="150" rx="8" class="green"/>
+  <text x="404" y="176" class="text">TFLite Detector</text>
+  <text x="404" y="210" class="small">Input 640 x 640</text>
+  <text x="404" y="234" class="small">YOLO decode + NMS</text>
+  <text x="404" y="258" class="small">Raw threshold 0.25</text>
+
+  <rect x="698" y="136" width="310" height="150" rx="8" class="orange"/>
+  <text x="724" y="176" class="text">DetectionViewModel</text>
+  <text x="724" y="210" class="small">Mulai/Stop mengatur sesi</text>
+  <text x="724" y="234" class="small">Save/list jika confidence >= 50%</text>
+  <text x="724" y="258" class="small">Dedup class + fingerprint</text>
+
+  <path d="M303 211 H373" class="arrow"/><path d="M623 211 H693" class="arrow"/>
+
+  <rect x="70" y="376" width="250" height="140" rx="8" class="card"/>
+  <text x="96" y="418" class="text">Overlay UI</text>
+  <text x="96" y="452" class="small">Bounding box</text>
+  <text x="96" y="476" class="small">Kode TBS + label</text>
+  <text x="96" y="500" class="small">Status Deteksi aktif/tidak</text>
+
+  <rect x="378" y="376" width="250" height="140" rx="8" class="purple"/>
+  <text x="404" y="418" class="text">Menu Data</text>
+  <text x="404" y="452" class="small">Data TBS Tersimpan</text>
+  <text x="404" y="476" class="small">Total, summary class</text>
+  <text x="404" y="500" class="small">Thumbnail dan path DB</text>
+
+  <rect x="686" y="376" width="250" height="140" rx="8" class="card"/>
+  <text x="712" y="418" class="text">SQLite External</text>
+  <text x="712" y="452" class="small">mgrading.db</text>
+  <text x="712" y="476" class="small">Tabel grading_tags</text>
+  <text x="712" y="500" class="small">Prefix tag TBS-xxxxxx</text>
+
+  <rect x="958" y="376" width="150" height="140" rx="8" class="card"/>
+  <text x="982" y="418" class="text">Gambar</text>
+  <text x="982" y="452" class="small">frame</text>
+  <text x="982" y="476" class="small">crop</text>
+  <text x="982" y="500" class="small">annotated</text>
+
+  <path d="M790 286 C682 338 455 340 218 376" class="arrow"/>
+  <path d="M842 286 C742 338 576 340 504 376" class="arrow"/>
+  <path d="M872 286 C850 332 820 346 812 376" class="arrow"/>
+  <path d="M920 286 C1000 330 1028 346 1034 376" class="arrow"/>
+</svg>

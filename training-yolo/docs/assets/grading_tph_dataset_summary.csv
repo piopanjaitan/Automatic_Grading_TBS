@@ -1,0 +1,4 @@
+split,images,labels,empty_label_files,total_objects,objects_kurang_masak,objects_masak,objects_mentah,objects_terlalu_masak
+train,4962,4962,336,9305,2637,1959,2448,2261
+valid,1403,1403,92,2655,757,556,706,636
+test,700,700,45,1358,394,271,362,331

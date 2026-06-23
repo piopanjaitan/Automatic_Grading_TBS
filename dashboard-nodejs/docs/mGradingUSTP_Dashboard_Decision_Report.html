@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>mGradingUSTP Dashboard Decision Report</title>
+  <style>
+    body { margin: 0; font-family: Arial, sans-serif; background: #F6F8FA; color: #1F2937; line-height: 1.55; }
+    main { max-width: 980px; margin: 0 auto; background: white; padding: 40px 32px 56px; }
+    h1 { font-size: 30px; margin: 0 0 18px; color: #0F5132; }
+    h2 { font-size: 21px; margin-top: 34px; color: #0F5132; border-top: 1px solid #E5E7EB; padding-top: 22px; }
+    h3 { font-size: 16px; margin-bottom: 8px; }
+    .summary li, .steps li, .questions li { margin: 8px 0; }
+    .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 18px 0 24px; }
+    .card { border: 1px solid #DDE3EA; border-radius: 8px; padding: 14px; background: #FBFCFE; }
+    .metric { display: block; font-size: 22px; font-weight: 700; color: #16805A; }
+    .label { display: block; color: #5B6675; font-size: 12px; }
+    figure { margin: 18px 0 26px; }
+    figure img { width: 100%; height: auto; border: 1px solid #E5E7EB; border-radius: 8px; }
+    figcaption { color: #5B6675; font-size: 13px; margin-top: 8px; }
+    table { width: 100%; border-collapse: collapse; margin: 14px 0 22px; }
+    th, td { border-bottom: 1px solid #E5E7EB; padding: 9px 8px; text-align: left; font-size: 14px; }
+    th { background: #F3F6F8; color: #374151; }
+    .note { background: #FFF8E6; border-left: 4px solid #C7922B; padding: 12px 14px; margin-top: 18px; }
+    code { background: #EEF3F7; padding: 2px 5px; border-radius: 5px; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>mGradingUSTP Dashboard Decision Report</h1>
+
+  <h2>Executive Summary</h2>
+  <ul class="summary">
+    <li><strong>Prioritize reliability and data completeness before adding dashboard features.</strong> The dashboard has enough data to validate the VPS pipeline shape: 790 detections, 20 sessions, and 2 Android devices from Jun 2, 2026 to Jun 19, 2026. The operational risk is not volume; it is preserving complete uploads and making sync health observable.</li>
+    <li><strong>Label mix is concentrated.</strong> <em>terlalu masak</em> is 406 records (51.4%) and <em>masak</em> is 282 records (35.7%). Together they account for 87.1% of records, so dashboard diagnostics should make label mix and label-specific confidence easy to monitor.</li>
+    <li><strong>Confidence quality is usable but uneven.</strong> Average confidence is 73.7%, with 297 records below 70% and 281 records at 80% or higher. This supports a confidence-quality view before deeper model tuning decisions.</li>
+    <li><strong>Image coverage needs hardening.</strong> Crop coverage is 93.7% and frame coverage is 85.4%, but annotated image coverage is only 1.1%. If annotated images are expected for audit, the upload or generation path should be fixed before relying on gallery review.</li>
+  </ul>
+
+  <div class="cards">
+    <div class="card"><span class="metric">790</span><span class="label">Detection records</span></div>
+    <div class="card"><span class="metric">20</span><span class="label">Sessions</span></div>
+    <div class="card"><span class="metric">73.7%</span><span class="label">Avg confidence</span></div>
+    <div class="card"><span class="metric">93.7%</span><span class="label">Crop coverage</span></div>
+  </div>
+
+  <h2>Label Mix Should Be A First-Class Monitoring View</h2>
+  <p><strong>The dashboard is mostly explaining overripe and ripe detections.</strong> The top two labels dominate record volume, while <em>mentah</em> appears only 5 times. That concentration is useful operationally because the default dashboard should quickly show whether field sessions are skewing toward expected maturity classes or whether the model/app is over-producing one label.</p>
+  <figure>
+    <img src="report_assets/label_mix.png" alt="Horizontal bar chart of detection label mix">
+    <figcaption>Records by label, source table <code>detections</code>, all available records.</figcaption>
+  </figure>
+  <table>
+    <thead><tr><th>Label</th><th>Records</th><th>Share</th><th>Avg confidence</th></tr></thead>
+    <tbody><tr><td>terlalu masak</td><td>406</td><td>51.4%</td><td>71.5%</td></tr><tr><td>masak</td><td>282</td><td>35.7%</td><td>75.3%</td></tr><tr><td>kurang masak</td><td>97</td><td>12.3%</td><td>78.4%</td></tr><tr><td>mentah</td><td>5</td><td>0.6%</td><td>66.8%</td></tr></tbody>
+  </table>
+
+  <h2>Volume Is Sufficient, But Session Peaks Need Operational Context</h2>
+  <p><strong>June 10 carries most of the observed volume.</strong> It has 499 of 790 records across 8 sessions, while the next largest date has 134 records. That makes the dashboard useful for stress-testing gallery, table, and API response behavior, but it also means any label or confidence conclusion should be treated as a field-test readout rather than a stable production baseline.</p>
+  <figure>
+    <img src="report_assets/daily_volume_confidence.png" alt="Daily record volume with average confidence line">
+    <figcaption>Daily records and average confidence from Jun 2, 2026 to Jun 19, 2026.</figcaption>
+  </figure>
+  <h3>Largest sessions</h3>
+  <table>
+    <thead><tr><th>Session</th><th>Records</th><th>Avg confidence</th></tr></thead>
+    <tbody><tr><td>LIVE-1781080912053</td><td>103</td><td>66.0%</td></tr><tr><td>LIVE-1781080720748</td><td>97</td><td>71.6%</td></tr><tr><td>LIVE-1781080794157</td><td>95</td><td>72.5%</td></tr><tr><td>LIVE-1781853269071</td><td>66</td><td>74.1%</td></tr><tr><td>LIVE-1780992550574</td><td>59</td><td>80.9%</td></tr><tr><td>LIVE-1781876107916</td><td>56</td><td>77.2%</td></tr><tr><td>NO_SESSION</td><td>53</td><td>82.6%</td></tr><tr><td>LIVE-1781081455238</td><td>51</td><td>69.3%</td></tr></tbody>
+  </table>
+
+  <h2>Confidence Quality Needs Monitoring, Not Immediate Redesign</h2>
+  <p><strong>The model output is strong enough for dashboard use but needs guardrails.</strong> Most records are at 70% or higher, yet 297 records sit below 70%. The next dashboard iteration should add confidence filters and low-confidence review counts to make quality issues visible by label, session, and upload date.</p>
+  <figure>
+    <img src="report_assets/confidence_distribution.png" alt="Bar chart of confidence score distribution">
+    <figcaption>Confidence bucket distribution, all available detection records.</figcaption>
+  </figure>
+
+  <h2>Recommended Next Steps</h2>
+  <ol class="steps">
+    <li><strong>Finish VPS reliability validation first.</strong> Deploy the new FastAPI and Streamlit services, then verify HTTPS, systemd restart, Android sync, duplicate update behavior, and image serving before adding new dashboard features.</li>
+    <li><strong>Add an upload completeness KPI.</strong> Track frame, crop, and annotated coverage separately because missing images reduce audit value even when metadata sync succeeds.</li>
+    <li><strong>Add confidence QA cuts.</strong> Show low-confidence records by label and session so field teams can separate model-quality issues from data-capture or lighting/session issues.</li>
+    <li><strong>Keep label mix prominent.</strong> Use label distribution and label-specific confidence as default views because the observed data is highly concentrated in two maturity classes.</li>
+  </ol>
+
+  <h2>Further Questions</h2>
+  <ol class="questions">
+    <li>Should annotated images be required for every synced record, or are crop/frame images enough for the first VPS release?</li>
+    <li>Which label mix is expected in normal field operations? Without that benchmark, the report can identify concentration but cannot judge whether it is good or bad.</li>
+    <li>What confidence threshold should trigger review, re-capture, or model retraining follow-up?</li>
+  </ol>
+
+  <h2>Caveats and Assumptions</h2>
+  <p>This report uses the local SQLite dashboard database at <code>/mnt/pioneer/Project_mGradingUSTP_Dashboard/server/mgrading_dashboard.db</code>, table <code>detections</code>. It treats the available records as field-test dashboard data, not a production baseline. Data warehouse and team communication sources were deferred during onboarding, so this report does not validate the numbers against external operational records or field notes. Static charts were rendered with Matplotlib because Seaborn is not installed in this local environment.</p>
+</main>
+</body>
+</html>

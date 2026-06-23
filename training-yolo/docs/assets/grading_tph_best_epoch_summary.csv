@@ -1,0 +1,2 @@
+run,best_epoch,precision,recall,map50,map50_95,train_box_loss,val_box_loss,val_cls_loss,val_dfl_loss
+palm_oil_optimized-2,50,0.94682,0.94291,0.97905,0.77554,0.70572,0.80915,0.39134,1.00092

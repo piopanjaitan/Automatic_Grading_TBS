@@ -1,0 +1,17 @@
+[Unit]
+Description=mGradingUSTP legacy HTML dashboard and upload API
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/opt/mgrading-dashboard
+Environment="MGRADING_HOST=127.0.0.1"
+Environment="MGRADING_PORT=8080"
+ExecStart=/opt/mgrading-dashboard/.venv/bin/python server/server.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

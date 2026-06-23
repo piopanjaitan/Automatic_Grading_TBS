@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>mGradingUSTP Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="wrap">
+    <section class="cover">
+      <div>
+        <p class="eyebrow">Dashboard Live Testing</p>
+        <h1>mGradingUSTP</h1>
+        <p class="cover-copy">Monitoring hasil deteksi TBS dari SQLite mobile, gambar crop, frame, dan ringkasan harian.</p>
+      </div>
+      <div class="status-card">
+        <span>Source</span>
+        <strong id="sourceFreshness">Loading data...</strong>
+      </div>
+    </section>
+
+    <section class="filters" aria-label="Filter dashboard">
+      <label>
+        Tanggal
+        <select id="dateFilter"></select>
+      </label>
+      <label>
+        Session
+        <select id="sessionFilter"></select>
+      </label>
+      <label>
+        Label
+        <select id="labelFilter"></select>
+      </label>
+      <label>
+        Confidence min
+        <input id="confidenceFilter" type="range" min="50" max="95" step="1" value="50">
+        <span id="confidenceValue">50%</span>
+      </label>
+      <label>
+        Cari tag
+        <input id="searchFilter" type="search" placeholder="TBS-000001">
+      </label>
+    </section>
+
+    <section class="kpis" aria-label="Ringkasan KPI">
+      <article><span>Total Deteksi</span><strong id="kpiTotal">0</strong><small>record tersaring</small></article>
+      <article><span>Live Session</span><strong id="kpiSessions">0</strong><small>session tersaring</small></article>
+      <article><span>Confidence Rata-rata</span><strong id="kpiAvgConf">0%</strong><small>record tersaring</small></article>
+      <article><span>Gambar Crop</span><strong id="kpiCrops">0</strong><small>bukti visual</small></article>
+    </section>
+
+    <section class="grid-two">
+      <article class="panel">
+        <div class="panel-head">
+          <h2>Distribusi Label</h2>
+          <p>Komposisi hasil grading TBS.</p>
+        </div>
+        <div id="labelChart" class="chart"></div>
+      </article>
+      <article class="panel">
+        <div class="panel-head">
+          <h2>Confidence</h2>
+          <p>Sebaran keyakinan model pada data tersimpan.</p>
+        </div>
+        <div id="confidenceChart" class="chart"></div>
+      </article>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Aktivitas per Tanggal</h2>
+        <p>Gunakan filter tanggal untuk melihat detail harian.</p>
+      </div>
+      <div id="dateCards" class="date-cards"></div>
+      <div id="dateChart" class="chart chart-wide"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Galeri Bukti Visual</h2>
+        <p>Contoh crop/frame dari data tersaring.</p>
+      </div>
+      <div id="gallery" class="gallery"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head row">
+        <div>
+          <h2>Data Deteksi</h2>
+          <p>Tabel operasional untuk audit tag, session, confidence, dan gambar.</p>
+        </div>
+        <button id="exportCsv" type="button">Export CSV</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Tag</th>
+              <th>Tanggal</th>
+              <th>Session</th>
+              <th>Label</th>
+              <th>Confidence</th>
+              <th>Seen</th>
+              <th>Gambar</th>
+            </tr>
+          </thead>
+          <tbody id="recordsTable"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="method">
+      <h2>Source & Method</h2>
+      <p id="sourcePath"></p>
+      <p>Dashboard ini dibuat dari table <code>grading_tags</code>. Timestamp dibaca sebagai waktu lokal mesin generator. Gambar disalin dari folder app-specific storage jika file tersedia.</p>
+    </section>
+  </main>
+
+  <dialog id="detailDialog">
+    <div class="dialog-head">
+      <h2 id="detailTitle">Detail</h2>
+      <button id="closeDialog" type="button">Tutup</button>
+    </div>
+    <div id="detailBody"></div>
+  </dialog>
+
+  <script src="data/dashboard-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,3 @@
+scope,source,split,images,instances,precision,recall,map50,map50_95,box_loss,cls_loss,dfl_loss,notes
+palm_oil_v13,results.csv,val,1403,2654,0.93894,0.93570,0.97568,0.78483,0.81866,0.38407,1.04783,"Final epoch 50 metrics from runs/detect/palm_oil_v13/results.csv"
+palm_oil_v13,notebook_val_output,val,1403,2654,0.94000,0.93600,0.97600,0.78504,,,,"Ultralytics validation output captured in Grading_TPH-Copy1.ipynb cell 8"

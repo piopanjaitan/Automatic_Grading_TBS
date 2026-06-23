@@ -1,0 +1,6 @@
+split,class_id,class_name,images,instances,precision,recall,map50,map50_95,source
+val,all,all,1403,2654,0.940,0.936,0.976,0.785,Grading_TPH-Copy1.ipynb cell 8 output
+val,0,kurang masak,346,757,0.944,0.920,0.979,0.772,Grading_TPH-Copy1.ipynb cell 8 output
+val,1,masak,417,556,0.949,0.942,0.980,0.839,Grading_TPH-Copy1.ipynb cell 8 output
+val,2,mentah,298,706,0.919,0.945,0.963,0.743,Grading_TPH-Copy1.ipynb cell 8 output
+val,3,terlalu masak,383,635,0.946,0.938,0.980,0.785,Grading_TPH-Copy1.ipynb cell 8 output

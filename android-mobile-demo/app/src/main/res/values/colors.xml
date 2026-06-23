@@ -1,0 +1,7 @@
+<resources>
+    <color name="ustp_green">#0F766E</color>
+    <color name="ustp_green_dark">#0A514B</color>
+    <color name="ustp_background">#F4F7F8</color>
+    <color name="ustp_surface">#FFFFFF</color>
+    <color name="ustp_text">#1F2933</color>
+</resources>

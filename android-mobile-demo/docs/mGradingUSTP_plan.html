@@ -1,0 +1,75 @@
+<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>mGradingUSTP - Dokumentasi Perencanaan Aplikasi Mobile TBS</title><style>
+:root{color-scheme:light;--ink:#17202a;--muted:#52616f;--brand:#0f766e;--line:#d6e0df;--soft:#f5f8f8;--code:#eef6f5}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f7faf9;color:var(--ink);line-height:1.55}.wrap{max-width:1120px;margin:0 auto;padding:34px 28px 64px}h1{font-size:34px;margin:0 0 12px;color:#0f3f3a}h2{font-size:25px;margin:34px 0 12px;border-top:1px solid var(--line);padding-top:24px}h3{font-size:20px;margin:24px 0 8px}p{margin:8px 0;color:var(--ink)}.bullet{padding-left:18px;position:relative}.bullet:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--brand);position:absolute;left:2px;top:13px}code{background:var(--code);padding:2px 5px;border-radius:4px;font-family:Consolas,Monaco,monospace;font-size:.94em}pre{background:#0b1220;color:#e5f3f0;padding:16px;border-radius:8px;overflow:auto}pre code{background:transparent;color:inherit;padding:0}table{width:100%;border-collapse:collapse;background:#fff;margin:14px 0 24px;border:1px solid var(--line);border-radius:8px;overflow:hidden}th{background:#0f766e;color:#fff;text-align:left;padding:10px 12px;font-weight:700}td{padding:10px 12px;border-top:1px solid var(--line);vertical-align:top}tr:nth-child(even) td{background:#fbfdfc}figure{margin:20px 0 30px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px}figure img{width:100%;height:auto;display:block}figcaption{font-size:13px;color:var(--muted);margin-top:8px}.cover{background:#0f766e;color:white;border-radius:10px;padding:22px 24px;margin-bottom:24px}.cover h1{color:white;margin:0}.cover p{color:#d9fffa;margin:6px 0 0}@media print{body{background:#fff}.wrap{max-width:none;padding:18px}figure{break-inside:avoid}table{break-inside:avoid}}
+</style></head><body><main class="wrap"><div class="cover"><h1>mGradingUSTP - Dokumentasi Perencanaan Aplikasi Mobile TBS</h1><p>Project mGradingUSTP - diperbarui 9 Juni 2026</p></div><h1>mGradingUSTP - Dokumentasi Perencanaan Aplikasi Mobile TBS</h1>
+<p>Tanggal dokumen: 9 Juni 2026</p>
+<p>Lokasi project: <code>/mnt/pioneer/Project_GradingTph_Mobile</code></p>
+<h2>1. Tujuan Project</h2>
+<p><code>mGradingUSTP</code> adalah aplikasi Android offline untuk membantu user lapangan mendeteksi grading Tandan Buah Segar (TBS) dan berondolan menggunakan kamera mobile. App mendukung dua cara kerja: live detection dari kamera dan detection dari foto.</p>
+<figure><img src="assets/mgrading_architecture.svg" alt="Arsitektur mGradingUSTP"><figcaption>Arsitektur mGradingUSTP</figcaption></figure>
+<h2>2. Skenario Utama User</h2>
+<table>
+<thead><tr><th>Tahap</th><th>Aksi user</th><th>Output app</th></tr></thead>
+<tbody>
+<tr><td>Buka app</td><td>User membuka kamera</td><td>Preview tampil, status <code>Deteksi tidak aktif</code>.</td></tr>
+<tr><td>Mulai live</td><td>User tekan <code>Mulai</code></td><td>Status menjadi <code>Deteksi aktif</code>; app mulai membaca frame.</td></tr>
+<tr><td>Baca TBS satu per satu</td><td>User mengarahkan kamera ke tiap TBS</td><td>Jika confidence <code>&gt;=50%</code>, tag <code>TBS-xxxxxx</code> muncul dan data tersimpan.</td></tr>
+<tr><td>Pindah objek</td><td>User mengarah ke TBS lain</td><td>Tag baru dibuat jika objek belum pernah tersimpan.</td></tr>
+<tr><td>Kembali objek lama</td><td>User mengarah lagi ke objek yang sama</td><td>Tag lama langsung muncul, record baru tidak dibuat.</td></tr>
+<tr><td>Zoom out</td><td>User melihat seluruh tumpukan TBS</td><td>Beberapa objek valid tampil dengan tag masing-masing.</td></tr>
+<tr><td>Ambil foto</td><td>User tekan <code>Foto</code></td><td>Foto beranotasi disimpan.</td></tr>
+<tr><td>Audit data</td><td>User tekan <code>Data</code></td><td>Form/list data TBS tersimpan ditampilkan.</td></tr>
+<tr><td>Berhenti</td><td>User tekan <code>Stop</code></td><td>Deteksi berhenti dan status menjadi <code>Deteksi tidak aktif</code>.</td></tr>
+</tbody></table>
+<figure><img src="assets/mgrading_ui_menu_status.svg" alt="UI status dan menu Data"><figcaption>UI status dan menu Data</figcaption></figure>
+<h2>3. Kebutuhan Fitur</h2>
+<table>
+<thead><tr><th>Fitur</th><th>Prioritas</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>Live camera detection manual start/stop</td><td>P0</td><td>Implemented</td></tr>
+<tr><td>Status deteksi kanan atas</td><td>P0</td><td>Implemented</td></tr>
+<tr><td>Auto tag TBS dengan threshold 50%</td><td>P0</td><td>Implemented</td></tr>
+<tr><td>Simpan frame/crop/foto anotasi</td><td>P0</td><td>Implemented</td></tr>
+<tr><td>SQLite external <code>mgrading.db</code></td><td>P0</td><td>Implemented</td></tr>
+<tr><td>Menu dan form daftar data tersimpan</td><td>P0</td><td>Implemented</td></tr>
+<tr><td>Dedup objek sama</td><td>P0</td><td>Implemented dengan fingerprint</td></tr>
+<tr><td>Export/sinkronisasi data keluar aplikasi</td><td>P1</td><td>Belum menjadi scope saat ini</td></tr>
+<tr><td>Training ulang model dengan data lapangan tambahan</td><td>P1</td><td>Direkomendasikan setelah pengumpulan data</td></tr>
+</tbody></table>
+<h2>4. Rancangan UX Operasional</h2>
+<p class="bullet">- Tombol <code>Mulai</code> wajib ditekan sebelum deteksi berjalan agar app tidak langsung menyimpan data saat user baru membuka kamera.</p>
+<p class="bullet">- Tombol <code>Stop</code> menghentikan deteksi tanpa menutup kamera.</p>
+<p class="bullet">- Status kanan atas memberi feedback cepat: <code>Deteksi aktif</code> atau <code>Deteksi tidak aktif</code>.</p>
+<p class="bullet">- Tombol <code>Data</code> berada di layar kamera agar user bisa audit hasil tanpa mencari file database manual.</p>
+<p class="bullet">- Kontrol bawah memakai safe area agar tidak tertimpa navigation bar Android.</p>
+<h2>5. Rencana Data dan Storage</h2>
+<figure><img src="assets/mgrading_storage.svg" alt="Storage mGradingUSTP"><figcaption>Storage mGradingUSTP</figcaption></figure>
+<table>
+<thead><tr><th>Data</th><th>Lokasi</th></tr></thead>
+<tbody>
+<tr><td>SQLite</td><td><code>/sdcard/Android/data/com.ustp.mgrading/files/Documents/mgrading.db</code></td></tr>
+<tr><td>Gambar</td><td><code>/sdcard/Android/data/com.ustp.mgrading/files/Pictures/grading/YYYYMMDD/</code></td></tr>
+<tr><td>Tag</td><td><code>TBS-000001</code>, <code>TBS-000002</code>, dan seterusnya</td></tr>
+<tr><td>Record utama</td><td><code>grading_tags</code></td></tr>
+</tbody></table>
+<h2>6. Rencana Validasi Lapangan</h2>
+<table>
+<thead><tr><th>Uji</th><th>Kriteria berhasil</th></tr></thead>
+<tbody>
+<tr><td>Objek tunggal</td><td>Tag muncul saat confidence <code>&gt;=50%</code>.</td></tr>
+<tr><td>Objek banyak</td><td>Lebih dari satu TBS bisa diberi tag pada satu frame/foto.</td></tr>
+<tr><td>Objek sama</td><td>Tidak membuat record duplikat saat kamera masih melihat objek yang sama.</td></tr>
+<tr><td>Objek lama</td><td>Tag lama muncul saat user kembali ke objek yang sudah pernah tersimpan.</td></tr>
+<tr><td>Stop detection</td><td>Setelah <code>Stop</code>, tidak ada deteksi dan tidak ada record baru.</td></tr>
+<tr><td>Data page</td><td>Total data, summary kelas, dan thumbnail tampil.</td></tr>
+<tr><td>Storage</td><td>File <code>mgrading.db</code> dan gambar bisa ditemukan di external app-specific storage.</td></tr>
+</tbody></table>
+<h2>7. Roadmap Lanjutan</h2>
+<table>
+<thead><tr><th>Tahap</th><th>Rencana</th></tr></thead>
+<tbody>
+<tr><td>v1.1</td><td>Export CSV/ZIP untuk database dan gambar.</td></tr>
+<tr><td>v1.2</td><td>Filter tanggal, session, dan label pada halaman Data.</td></tr>
+<tr><td>v1.3</td><td>Sinkronisasi server jika perangkat online.</td></tr>
+<tr><td>v1.4</td><td>Training ulang TFLite dari data real lapangan yang sudah dikumpulkan.</td></tr>
+</tbody></table></main></body></html>

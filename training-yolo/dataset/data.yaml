@@ -1,0 +1,15 @@
+names:
+- kurang masak
+- masak
+- mentah
+- terlalu masak
+nc: 4
+roboflow:
+  license: CC BY 4.0
+  project: palm-oil-fg85a-vi4l8
+  url: https://universe.roboflow.com/unsupervise-mharvesting/palm-oil-fg85a-vi4l8/dataset/1
+  version: 1
+  workspace: unsupervise-mharvesting
+test: ../test/images
+train: ../train/images
+val: ../valid/images

@@ -1,0 +1,10 @@
+<resources>
+    <style name="Theme.MGradingUSTP" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/ustp_green</item>
+        <item name="colorPrimaryVariant">@color/ustp_green_dark</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="android:fontFamily">sans</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:navigationBarColor">#FFFFFF</item>
+    </style>
+</resources>

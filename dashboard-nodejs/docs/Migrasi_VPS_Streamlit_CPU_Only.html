@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Migrasi Dashboard Lama mGradingUSTP ke VPS Sumapod</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.58; color: #17202a; margin: 0; background: #f7faf9; }
+    main { max-width: 980px; margin: 0 auto; padding: 40px 24px; background: #fff; }
+    h1, h2, h3 { color: #0f3f3a; line-height: 1.25; }
+    h1 { margin-top: 0; }
+    h2 { margin-top: 32px; border-top: 1px solid #dce9e6; padding-top: 22px; }
+    h3 { margin-top: 24px; }
+    code, pre { background: #eef6f5; border-radius: 6px; }
+    code { padding: 2px 5px; }
+    pre { padding: 14px; overflow-x: auto; border: 1px solid #dce9e6; }
+    pre code { padding: 0; background: transparent; }
+    li { margin: 5px 0; }
+    a { color: #176d64; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Migrasi Dashboard Lama mGradingUSTP ke VPS Sumapod</h1>
+  <p>Dokumen ini menjelaskan cara deploy dashboard lama mGradingUSTP dari folder <code>Streamlit_CPU_Only</code>. Nama folder tetap dipertahankan, tetapi implementasi dashboard tidak lagi memakai Streamlit. Isi dashboard disamakan dengan dashboard lama di <code>/mnt/pioneer/Project_mGradingUSTP_Dashboard/</code>: static HTML/CSS/JS di <code>public/</code> dan satu backend Python standard-library di <code>server/server.py</code>.</p>
+  <h2>Target Akhir</h2>
+  <ul>
+    <li>Dashboard publik: <code>https://dashboard-grading-ustp.my.id</code></li>
+    <li>Endpoint upload Android: <code>https://dashboard-grading-ustp.my.id/api/detections</code></li>
+    <li>URL yang diisi di aplikasi Android: <code>https://dashboard-grading-ustp.my.id</code></li>
+    <li>Endpoint health: <code>https://dashboard-grading-ustp.my.id/api/health</code></li>
+    <li>Metadata SQLite: <code>/opt/mgrading-dashboard/server/mgrading_dashboard.db</code></li>
+    <li>Gambar upload: <code>/opt/mgrading-dashboard/server/uploads/YYYYMMDD/{frame,crop,annotated}/</code></li>
+  </ul>
+  <h2>Struktur Folder Deploy</h2>
+  <pre><code class="language-text">Streamlit_CPU_Only/
+  public/
+    index.html
+    app.js
+    styles.css
+    data/dashboard-data.js
+  server/
+    server.py
+    mgrading_dashboard.db
+    uploads/
+  deploy/
+    mgrading-dashboard.service
+    nginx-dashboard-grading-ustp.my.id.conf
+    VPS_Ubuntu_24_04_Checklist.md
+  requirements.txt</code></pre>
+  <h2>Arsitektur</h2>
+  <p>Satu proses Python menjalankan dashboard lama:</p>
+  <ul>
+    <li>Serve halaman static dari <code>public/</code></li>
+    <li>Serve upload image dari <code>/server/uploads/...</code></li>
+    <li>Serve API dashboard dari <code>/api/dashboard-data</code></li>
+    <li>Terima upload Android di <code>/api/detections</code></li>
+  </ul>
+  <p>Service Python berjalan lokal di VPS:</p>
+  <pre><code class="language-text">127.0.0.1:8080</code></pre>
+  <p>Nginx menjadi reverse proxy publik:</p>
+  <pre><code class="language-text">https://dashboard-grading-ustp.my.id/ -&gt; http://127.0.0.1:8080/</code></pre>
+  <p>Tidak ada service Streamlit, Uvicorn, atau FastAPI terpisah pada versi ini.</p>
+  <h2>Endpoint Backend</h2>
+  <h3>GET <code>/api/health</code></h3>
+  <p>Mengembalikan status service. Response sukses minimal berisi:</p>
+  <pre><code class="language-json">{&quot;status&quot;:&quot;ok&quot;,&quot;project&quot;:&quot;mGradingUSTP&quot;}</code></pre>
+  <h3>GET <code>/api/dashboard-data</code></h3>
+  <p>Mengembalikan payload dashboard:</p>
+  <ul>
+    <li><code>summary</code></li>
+    <li><code>labels</code></li>
+    <li><code>sessions</code></li>
+    <li><code>dates</code></li>
+    <li><code>confidenceBuckets</code></li>
+    <li><code>records</code></li>
+  </ul>
+  <p>Frontend lama otomatis mencoba membaca endpoint ini dengan <code>fetch(&quot;/api/dashboard-data&quot;)</code>. Jika endpoint tidak tersedia, frontend masih punya fallback static dari <code>public/data/dashboard-data.js</code>.</p>
+  <h3>POST <code>/api/detections</code></h3>
+  <p>Android mengirim multipart form:</p>
+  <ul>
+    <li><code>metadata</code>: JSON berisi <code>device_id</code>, <code>local_id</code>, <code>tag_code</code>, <code>session_id</code>, <code>class_id</code>, <code>label</code>, <code>confidence</code>, bbox, <code>fingerprint</code>, <code>created_at</code>, <code>last_seen_at</code>, dan <code>seen_count</code></li>
+    <li><code>frame</code>: JPEG opsional</li>
+    <li><code>crop</code>: JPEG opsional</li>
+    <li><code>annotated</code>: JPEG opsional</li>
+  </ul>
+  <p>Backend memakai unique key <code>device_id + local_id</code>. Upload ulang data yang sama akan update record lama, bukan insert duplikat.</p>
+  <h2>Persiapan DNS</h2>
+  <ol>
+    <li>Arahkan A record <code>dashboard-grading-ustp.my.id</code> ke IP public VPS Sumapod.</li>
+    <li>Jangan gunakan AAAA record jika VPS tidak punya IPv6.</li>
+    <li>Validasi:</li>
+  </ol>
+  <pre><code class="language-bash">dig +short dashboard-grading-ustp.my.id A</code></pre>
+  <p>Output harus IP public VPS.</p>
+  <h2>Persiapan VPS Ubuntu 24.04</h2>
+  <pre><code class="language-bash">sudo apt update
+sudo apt install -y python3-venv python3-pip nginx certbot python3-certbot-nginx</code></pre>
+  <p>Pastikan port <code>80</code> dan <code>443</code> terbuka di firewall/security group.</p>
+  <p>Jika di VPS sudah ada domain lain, tidak masalah selama setiap domain punya <code>server_name</code> sendiri dan proxy ke port service yang benar. Untuk dashboard ini, <code>dashboard-grading-ustp.my.id</code> harus proxy ke <code>127.0.0.1:8080</code>. Jika domain dashboard dan domain lama sama-sama diarahkan ke <code>127.0.0.1:8501</code>, isi keduanya akan terlihat sama.</p>
+  <h2>Copy Aplikasi ke VPS</h2>
+  <pre><code class="language-bash">sudo mkdir -p /opt/mgrading-dashboard
+sudo rsync -av Streamlit_CPU_Only/ /opt/mgrading-dashboard/
+sudo chown -R www-data:www-data /opt/mgrading-dashboard</code></pre>
+  <h2>Setup Python</h2>
+  <p>Dashboard lama memakai Python standard library. Virtualenv tetap dibuat agar path service konsisten.</p>
+  <pre><code class="language-bash">cd /opt/mgrading-dashboard
+sudo -u www-data python3 -m venv .venv
+sudo -H -u www-data .venv/bin/pip install --upgrade pip
+sudo -H -u www-data .venv/bin/pip install -r requirements.txt
+sudo -u www-data mkdir -p server/uploads</code></pre>
+  <p>Database akan dibuat otomatis saat service pertama kali start jika belum ada.</p>
+  <p>Jika <code>pip</code> menampilkan warning cache seperti <code>/var/www/.cache/pip is not writable</code>, itu bukan error instalasi. Karena <code>requirements.txt</code> versi ini tidak membutuhkan dependency eksternal, warning tersebut bisa diabaikan selama command selesai tanpa pesan <code>ERROR</code>.</p>
+  <h2>Setup systemd</h2>
+  <pre><code class="language-bash">sudo cp deploy/mgrading-dashboard.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable --now mgrading-dashboard
+sudo systemctl status mgrading-dashboard</code></pre>
+  <p>Lihat log:</p>
+  <pre><code class="language-bash">journalctl -u mgrading-dashboard -f</code></pre>
+  <h2>Setup Nginx</h2>
+  <pre><code class="language-bash">sudo cp deploy/nginx-dashboard-grading-ustp.my.id.conf /etc/nginx/sites-available/dashboard-grading-ustp.my.id
+sudo ln -s /etc/nginx/sites-available/dashboard-grading-ustp.my.id /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl reload nginx</code></pre>
+  <p>Konfigurasi Nginx dashboard cukup proxy semua route ke <code>127.0.0.1:8080</code>. Domain lama <code>grading-ustp.my.id</code> boleh tetap memakai service/port lain.</p>
+  <h2>Setup HTTPS Certbot</h2>
+  <p>Jalankan setelah DNS sehat:</p>
+  <pre><code class="language-bash">sudo certbot --nginx -d dashboard-grading-ustp.my.id
+sudo certbot renew --dry-run</code></pre>
+  <p>Jika Certbot gagal dengan <code>SERVFAIL looking up A/AAAA</code>, perbaiki DNS dulu. Pastikan A record domain mengarah ke IP public VPS, hapus AAAA record jika tidak memakai IPv6, lalu coba lagi setelah propagasi DNS sehat.</p>
+  <h2>Setting Android</h2>
+  <p>Di aplikasi Android, isi URL dashboard:</p>
+  <pre><code class="language-text">https://dashboard-grading-ustp.my.id</code></pre>
+  <p>Lalu tekan <code>Sync Sekarang</code> dan pastikan status upload berubah menjadi <code>SYNCED</code>.</p>
+  <p>Jangan isi kolom URL Android dengan <code>https://dashboard-grading-ustp.my.id/api/detections</code>. Aplikasi Android sudah menambahkan path <code>/api/detections</code> sendiri. Jika endpoint lengkap dimasukkan ke setting, request akan menjadi <code>/api/detections/api/detections</code> dan server akan membalas <code>404</code>.</p>
+  <h2>Validasi</h2>
+  <p>Validasi service lokal:</p>
+  <pre><code class="language-bash">curl -s http://127.0.0.1:8080/api/health
+curl -s http://127.0.0.1:8080/ | head</code></pre>
+  <p>Validasi domain:</p>
+  <pre><code class="language-bash">curl -s https://dashboard-grading-ustp.my.id/api/health
+curl -s https://dashboard-grading-ustp.my.id/ | head</code></pre>
+  <p>Validasi upload tanpa gambar:</p>
+  <pre><code class="language-bash">curl -s -X POST https://dashboard-grading-ustp.my.id/api/detections \
+  -F &#x27;metadata={
+    &quot;device_id&quot;:&quot;test-device&quot;,
+    &quot;local_id&quot;:999999,
+    &quot;tag_code&quot;:&quot;TEST-999999&quot;,
+    &quot;session_id&quot;:&quot;TEST-SESSION&quot;,
+    &quot;class_id&quot;:1,
+    &quot;label&quot;:&quot;test&quot;,
+    &quot;confidence&quot;:0.91,
+    &quot;bbox_left&quot;:1,
+    &quot;bbox_top&quot;:2,
+    &quot;bbox_right&quot;:3,
+    &quot;bbox_bottom&quot;:4,
+    &quot;fingerprint&quot;:&quot;testfingerprint&quot;,
+    &quot;created_at&quot;:1782110000000,
+    &quot;last_seen_at&quot;:1782110000000,
+    &quot;seen_count&quot;:1
+  }&#x27;</code></pre>
+  <p>Response sukses:</p>
+  <pre><code class="language-json">{&quot;status&quot;:&quot;synced&quot;,&quot;remote_id&quot;:791,&quot;frame_url&quot;:null,&quot;crop_url&quot;:null,&quot;annotated_url&quot;:null}</code></pre>
+  <p><code>frame_url</code>, <code>crop_url</code>, dan <code>annotated_url</code> bernilai <code>null</code> jika test <code>curl</code> tidak mengirim file gambar. Itu normal.</p>
+  <p>Validasi dashboard:</p>
+  <ul>
+    <li>Tampilan sama dengan dashboard lama.</li>
+    <li>Filter tanggal, session, label, confidence, dan cari tag bekerja.</li>
+    <li>KPI, chart SVG, date cards, gallery, tabel, detail dialog, dan export CSV bekerja.</li>
+    <li>Gambar crop/frame/annotated tampil dari <code>/server/uploads/...</code>.</li>
+  </ul>
+  <h2>Troubleshooting Cepat</h2>
+  <h3>Browser membuka domain dashboard tetapi isinya sama dengan domain lama</h3>
+  <p>Penyebab paling umum: dua <code>server_name</code> Nginx berbeda sama-sama proxy ke port yang sama. Cek:</p>
+  <pre><code class="language-bash">sudo nginx -T | grep -n &quot;server_name&quot;
+sudo nginx -T | sed -n &#x27;180,270p&#x27;</code></pre>
+  <p>Untuk domain dashboard, pastikan:</p>
+  <pre><code class="language-nginx">server_name dashboard-grading-ustp.my.id;
+location / {
+    proxy_pass http://127.0.0.1:8080;
+}</code></pre>
+  <h3>Android gagal sync dan log berisi <code>/api/detections/api/detections</code></h3>
+  <p>Penyebab: URL di setting Android diisi endpoint lengkap. Ganti menjadi base URL saja:</p>
+  <pre><code class="language-text">https://dashboard-grading-ustp.my.id</code></pre>
+  <p>Setelah itu tekan <code>Sync Sekarang</code>.</p>
+  <h3>Log berisi request <code>/_stcore/host-config</code> atau <code>/_stcore/health</code></h3>
+  <p>Itu request lama milik Streamlit dari browser/cache atau service lama. Versi dashboard ini tidak memakai Streamlit, jadi <code>404</code> untuk <code>/_stcore/*</code> tidak mempengaruhi upload Android.</p>
+  <p>Jika service Streamlit lama masih ada, hentikan:</p>
+  <pre><code class="language-bash">sudo systemctl disable --now mgrading-streamlit 2&gt;/dev/null</code></pre>
+  <p>Lalu buka dashboard dengan hard refresh atau incognito.</p>
+  <h3>Service tidak menjawab di port 8080</h3>
+  <p>Cek status dan log:</p>
+  <pre><code class="language-bash">sudo systemctl status mgrading-dashboard
+sudo journalctl -u mgrading-dashboard -n 100 --no-pager
+curl -s http://127.0.0.1:8080/api/health</code></pre>
+  <p>Jika file service belum ada, gunakan file yang benar:</p>
+  <pre><code class="language-bash">sudo cp deploy/mgrading-dashboard.service /etc/systemd/system/</code></pre>
+  <p>File <code>mgrading-api.service</code> dan <code>mgrading-streamlit.service</code> adalah template lama dan tidak dipakai lagi pada versi ini.</p>
+  <h2>Hardening Lanjutan</h2>
+  <p>Tahap ini belum memakai login. Jika dashboard dibuka publik, pertimbangkan:</p>
+  <ul>
+    <li>Basic auth di Nginx.</li>
+    <li>IP allowlist.</li>
+    <li>Token/API key untuk upload Android.</li>
+    <li>Backup periodik <code>server/mgrading_dashboard.db</code> dan <code>server/uploads/</code>.</li>
+  </ul>
+</main>
+</body>
+</html>
