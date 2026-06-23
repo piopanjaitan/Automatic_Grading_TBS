@@ -1,0 +1,71 @@
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.python-version
+.venv/
+venv/
+env/
+.ipynb_checkpoints/
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+dist/
+coverage/
+
+# Android / Gradle
+.gradle/
+build/
+local.properties
+*.apk
+*.aab
+*.apks
+
+# Machine learning outputs and large artifacts
+runs/
+weights/
+datasets/
+dataset/
+uploads/
+download/
+outputs/
+checkpoints/
+*.pt
+*.pth
+*.onnx
+*.tflite
+*.engine
+*.pb
+
+# Large media and archives
+*.zip
+*.rar
+*.7z
+*.tar
+*.tar.gz
+*.mp4
+*.mov
+*.avi
+*.mkv
+
+# Local databases
+*.db
+*.sqlite
+*.sqlite3
