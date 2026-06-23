@@ -1,6 +1,8 @@
 # 🌴 Automatic Grading TBS AI Computer Vision
 
-Final Project - CV Kelompok A (Raden Saleh)
+Final Project - Indonesia AI
+
+CV Kelompok A (Raden Saleh)
 
 1. Ridwan Pioneer Panjaitan
 2. Felim
